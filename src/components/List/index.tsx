@@ -2,17 +2,15 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { MatchesContext } from "../../context/MatchesContext";
 import Button from "../Button";
+import Header from "../Header";
+import Wrapper from "../Wrapper";
 import MatchCard from "./MatchCard";
 
 const List = () => {
 	const { matches } = useContext(MatchesContext);
 	return (
-		<div className="text-center max-h-screen overflow-y-scroll relative flex flex-col h-full items-center justify-center py-3">
-			<div className="sticky top-0 w-full bg-white dark:bg-slate-800">
-				<h1 className="text-3xl">Burraco</h1>
-				<h2 className="text-xl ">Lista partite</h2>
-				<hr className="my-3 dark:border-white " />
-			</div>
+		<Wrapper>
+			<Header title="Lista partite" />
 			{matches.length ? (
 				<div className="px-5">
 					{matches.map((m) => (
@@ -27,7 +25,7 @@ const List = () => {
 					</Link>
 				</div>
 			)}
-		</div>
+		</Wrapper>
 	);
 };
 
