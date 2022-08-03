@@ -1,5 +1,6 @@
-import { useContext } from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { MatchesContext } from "../context/MatchesContext";
 import Match from "../types/Match";
 import Player from "../types/Player";
@@ -27,6 +28,7 @@ const NewMatch = () => {
 	const [num, setNum] = useState<number>(2);
 	const [name, setName] = useState<string>("Burraco ");
 	const { addMatch } = useContext(MatchesContext);
+	const navigate = useNavigate();
 
 	const handleSwitchGameType = () => {
 		setIsSquadGame((p) => !p);
@@ -36,6 +38,7 @@ const NewMatch = () => {
 		const names = [...Array(num)].map((_, i) => `${isSquadGame ? "Squadra" : "Giocatore"} ${i + 1}`);
 		const players: Player[] = names.map((name) => {
 			return {
+				id: uuidv4(),
 				name,
 				points: [],
 				score: 0,
@@ -44,11 +47,12 @@ const NewMatch = () => {
 		const newMatch: Match = {
 			date: new Date(),
 			finished: false,
-			id: `${Date.now()}-${(Math.random() * 100).toFixed(0)}`,
+			id: uuidv4(),
 			name,
 			players,
 		};
 		addMatch(newMatch);
+		navigate(`/match/${newMatch.id}`);
 	};
 
 	return (
