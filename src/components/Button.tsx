@@ -1,5 +1,3 @@
-import React from "react";
-
 const Button = ({ children, className = "", ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
 	return (
 		<button
