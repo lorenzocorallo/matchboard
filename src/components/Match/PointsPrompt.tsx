@@ -11,19 +11,19 @@ interface Props extends React.HTMLAttributes<HTMLFormElement> {
 }
 
 const PointsPrompt = ({ active, onValue, onClose }: Props) => {
-	const [value, setValue] = useState<number>();
+	const [value, setValue] = useState<string>("");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
-		onValue(value || 0);
+		onValue(parseInt(value) || 0);
+		setValue("");
 	};
 
 	useEffect(() => {
 		if (!inputRef.current || !active) return;
-		setTimeout(() => {
-			inputRef.current!.focus();
-		}, 200);
+		inputRef.current.focus();
 	}, [inputRef, active]);
+
 	return (
 		<form
 			className={`absolute top-0 left-0 grid place-content-center bg-black opacity-80 h-screen w-screen transition-all ${
@@ -36,7 +36,7 @@ const PointsPrompt = ({ active, onValue, onClose }: Props) => {
 				<Button theme="error" onClick={onClose}>
 					X
 				</Button>
-				<TextField ref={inputRef} type="number" value={value} onChange={(e) => setValue(parseInt(e.target.value))} />
+				<TextField ref={inputRef} type="number" value={value} onChange={(e) => setValue(e.target.value)} />
 				<Button theme="success" type="submit">
 					Ok
 				</Button>
