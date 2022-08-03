@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IoAdd } from "react-icons/io5";
 import Player from "../../types/Player";
 import Button from "../Button";
 import PointsPrompt from "./PointsPrompt";
@@ -55,12 +56,12 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 				<hr />
 				<Button
 					theme="success"
-					className="text-2xl py-1"
+					className="text-2xl py-1 flex justify-center"
 					onClick={() => {
 						setPointsPromptActive(true);
 					}}
 				>
-					+
+					<IoAdd size={28} />
 				</Button>
 			</div>
 		</>

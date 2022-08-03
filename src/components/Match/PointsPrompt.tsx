@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import { IoCheckmark, IoClose } from "react-icons/io5";
 import Button from "../Button";
 import TextField from "../TextField";
 
@@ -34,11 +35,11 @@ const PointsPrompt = ({ active, onValue, onClose }: Props) => {
 			<p className="text-xl font-bold">Inserisci il punteggio</p>
 			<div className="flex justify-center items-center">
 				<Button theme="error" onClick={onClose}>
-					X
+					<IoClose size={24} />
 				</Button>
 				<TextField ref={inputRef} type="number" value={value} onChange={(e) => setValue(e.target.value)} />
 				<Button theme="success" type="submit">
-					Ok
+					<IoCheckmark size={24} />
 				</Button>
 			</div>
 		</form>
