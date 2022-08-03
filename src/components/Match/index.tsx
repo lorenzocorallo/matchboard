@@ -73,7 +73,7 @@ const Match = () => {
 
 	return (
 		<Wrapper>
-			<Header title={match ? `Partita: ${match.name.trimEnd()}` : "Partita non trovata"} />
+			<Header backPath="/" title={match ? `Partita: ${match.name.trimEnd()}` : "Partita non trovata"} />
 			{match ? (
 				<div className="px-5 w-full flex flex-col flex-1 gap-4 py-4">
 					<div className="flex justify-between">

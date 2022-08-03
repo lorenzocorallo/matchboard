@@ -9,12 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 const Switch = ({ activeLabel, inactiveLabel, active, onClick, className, ...props }: Props) => {
 	return (
-		<Button
-			onClick={onClick}
-			theme={active ? "success" : "default"}
-			className={`text-sm py-1  ${className}`}
-			{...props}
-		>
+		<Button onClick={onClick} theme={active ? "success" : "default"} className={`py-1 ${className || ""}`} {...props}>
 			{active ? activeLabel || "ON" : inactiveLabel || "OFF"}
 		</Button>
 	);

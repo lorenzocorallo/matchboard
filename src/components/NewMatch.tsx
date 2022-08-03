@@ -14,7 +14,7 @@ const PlayerNum = ({ stateNum, num, setNum }: { stateNum: number; num: number; s
 	const numStr = num.toString();
 	return (
 		<Switch
-			className="text-lg"
+			className=""
 			active={stateNum === num}
 			onClick={() => setNum(num)}
 			activeLabel={numStr}
@@ -57,26 +57,19 @@ const NewMatch = () => {
 
 	return (
 		<Wrapper>
-			<Header title="Nuova partita" />
+			<Header backPath="/" title="Nuova partita" />
 			<div className="flex flex-col gap-4 p-5 flex-1">
 				<TextField label="Nome partita" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
 				<div>
 					<p>Tipo di partita</p>
 					<div className="flex justify-center items-center">
 						<Switch
-							className="text-lg"
 							active={!isSquadGame}
 							onClick={handleSwitchGameType}
 							activeLabel="Singolo"
 							inactiveLabel="Singolo"
 						/>
-						<Switch
-							className="text-lg"
-							active={isSquadGame}
-							onClick={handleSwitchGameType}
-							activeLabel="Squadre"
-							inactiveLabel="Squadre"
-						/>
+						<Switch active={isSquadGame} onClick={handleSwitchGameType} activeLabel="Squadre" inactiveLabel="Squadre" />
 					</div>
 				</div>
 				<div>
