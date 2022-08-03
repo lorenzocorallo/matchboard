@@ -6,23 +6,32 @@ import Header from "../Header";
 import Wrapper from "../Wrapper";
 import MatchCard from "./MatchCard";
 
+const NewMatchBtn = () => (
+	<Link to="/new">
+		<Button theme="success" className="text-lg w-full mx-0">
+			Nuova Partita
+		</Button>
+	</Link>
+);
+
 const List = () => {
 	const { matches } = useContext(MatchesContext);
 	return (
 		<Wrapper>
 			<Header title="Lista partite" />
 			{matches.length > 0 ? (
-				<div className="px-5 w-full">
-					{matches.map((m) => (
-						<MatchCard match={m} key={m.id} />
-					))}
+				<div className="px-5 w-full flex flex-col flex-1">
+					<div className="flex-1">
+						{matches.map((m) => (
+							<MatchCard match={m} key={m.id} />
+						))}
+					</div>
+					<NewMatchBtn />
 				</div>
 			) : (
 				<div className="grid place-content-center flex-1 max-w-[20rem] gap-4">
 					<p className="text-2xl">Ancora nessuna partita creata, iniziane una ora!</p>
-					<Link to="/new">
-						<Button className="bg-green-600 hover:bg-green-700 text-lg">Nuova Partita</Button>
-					</Link>
+					<NewMatchBtn />
 				</div>
 			)}
 		</Wrapper>
