@@ -1,7 +1,13 @@
-const Button = ({ children, className = "", ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	theme?: "success" | "default";
+}
+
+const Button = ({ theme = "default", children, className = "", ...props }: Props) => {
 	return (
 		<button
-			className={`m-2 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 transition-all ${className}`}
+			className={`m-2 px-4 py-2 text-white rounded-md  transition-all ${
+				theme === "default" && "bg-gray-600 hover:bg-gray-700"
+			}   ${theme === "success" && "bg-green-600 hover:bg-green-700"} ${className}`}
 			{...props}
 		>
 			{children}

@@ -11,10 +11,10 @@ const List = () => {
 	return (
 		<Wrapper>
 			<Header title="Lista partite" />
-			{matches.length ? (
-				<div className="px-5">
+			{matches.length > 0 ? (
+				<div className="px-5 w-full">
 					{matches.map((m) => (
-						<MatchCard match={m} />
+						<MatchCard match={m} key={m.id} />
 					))}
 				</div>
 			) : (

@@ -7,11 +7,13 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 const MatchCard = ({ match: m }: Props) => {
 	return (
-		<Link to={`/match/${m.id}`} key={m.id}>
-			<div className="dark:bg-slate-600 my-5 rounded-xl cursor-pointer p-5 text-left">
-				<p>{m.date.toLocaleDateString()}</p>
+		<Link to={`/match/${m.id}`}>
+			<div className="dark:bg-slate-600 w-full my-5 rounded-xl cursor-pointer p-5 text-left">
 				<p>{m.name}</p>
-				<p className={m.finished ? "text-green-400" : "text-yellow-400"}>{m.finished ? "Finita" : "In Corso"}</p>
+				<div className="flex justify-between">
+					<p className={m.finished ? "text-green-400" : "text-yellow-400"}>{m.finished ? "Finita" : "In Corso"}</p>
+					<p>{m.date.toLocaleDateString()}</p>
+				</div>
 			</div>
 		</Link>
 	);
