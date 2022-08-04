@@ -27,7 +27,7 @@ const PointsPrompt = ({ active, onValue, onClose }: Props) => {
 
 	return (
 		<form
-			className={`absolute top-0 left-0 grid place-content-center bg-black opacity-80 h-screen w-screen transition-all ${
+			className={`absolute top-0 left-0 pt-[30%] bg-black opacity-80 h-screen w-screen transition-all ${
 				active ? "opacity-100 pointer-events-auto z-10" : "opacity-0 pointer-events-none -z-10"
 			}`}
 			onSubmit={handleSubmit}
