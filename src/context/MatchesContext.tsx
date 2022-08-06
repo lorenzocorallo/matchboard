@@ -16,6 +16,12 @@ export const MatchesContext = createContext<IMatchesContext>({
 	deleteMatch: () => {},
 });
 
+const sortMatches = (matches: Match[]) => {
+	return [...matches]
+		.map((match: Match) => ({ ...match, date: new Date(match.date) }))
+		.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
+};
+
 export const MatchesProvider = (props: React.HTMLAttributes<ProviderProps<IMatchesContext>>) => {
 	const [matches, setMatches] = useState<Match[]>([]);
 
@@ -27,16 +33,13 @@ export const MatchesProvider = (props: React.HTMLAttributes<ProviderProps<IMatch
 		const localMatches = localStorage.getItem("matches");
 		if (!localMatches) return [];
 		const parsed: Match[] = JSON.parse(localMatches);
-		const matches = parsed
-			.map((match: Match) => ({ ...match, date: new Date(match.date) }))
-			.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime())
-			.reverse();
+		const matches = sortMatches(parsed);
 		return matches;
 	};
 
 	const addMatch = (match: Match) => {
 		setMatches((m) => {
-			const newMatches = [...m, match];
+			const newMatches = sortMatches([...m, match]);
 			updateSavedMatches(newMatches);
 			return newMatches;
 		});
