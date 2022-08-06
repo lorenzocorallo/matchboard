@@ -6,7 +6,7 @@ import NewMatch from "./NewMatch";
 const Router = () => {
 	return (
 		<BrowserRouter>
-			<div className="w-screen h-screen dark:text-white dark:bg-slate-800 overflow-x-hidden">
+			<div className="w-screen h-screen dark:text-white dark:bg-slate-900 overflow-x-hidden">
 				<Routes>
 					<Route path="/match/:id" element={<Match />} />
 					<Route path="/new" element={<NewMatch />} />
