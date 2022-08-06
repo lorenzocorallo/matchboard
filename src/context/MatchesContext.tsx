@@ -26,10 +26,11 @@ export const MatchesProvider = (props: React.HTMLAttributes<ProviderProps<IMatch
 	const getSavedMatches = () => {
 		const localMatches = localStorage.getItem("matches");
 		if (!localMatches) return [];
-		const parsed = JSON.parse(localMatches);
+		const parsed: Match[] = JSON.parse(localMatches);
 		const matches = parsed
 			.map((match: Match) => ({ ...match, date: new Date(match.date) }))
-			.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
+			.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime())
+			.reverse();
 		return matches;
 	};
 

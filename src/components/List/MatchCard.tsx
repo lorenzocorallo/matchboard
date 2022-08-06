@@ -12,7 +12,15 @@ const MatchCard = ({ match: m }: Props) => {
 				<p>{m.name}</p>
 				<div className="flex justify-between">
 					<p className={m.finished ? "text-green-400" : "text-yellow-400"}>{m.finished ? "Finita" : "In Corso"}</p>
-					<p>{m.date.toLocaleDateString()}</p>
+					<p>
+						{m.date.toLocaleTimeString([], {
+							year: "numeric",
+							month: "numeric",
+							day: "numeric",
+							hour: "2-digit",
+							minute: "2-digit",
+						})}
+					</p>
 				</div>
 			</div>
 		</Link>
