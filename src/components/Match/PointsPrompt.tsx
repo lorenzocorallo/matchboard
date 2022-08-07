@@ -34,7 +34,7 @@ const PointsPrompt = ({ active, onValue, onClose }: Props) => {
 		>
 			<p className="text-xl font-bold">Inserisci il punteggio</p>
 			<div className="flex justify-center items-center">
-				<Button theme="error" onClick={onClose}>
+				<Button theme="error" onClick={onClose} type="button">
 					<IoClose size={24} />
 				</Button>
 				<TextField ref={inputRef} type="number" value={value} onChange={(e) => setValue(e.target.value)} />
