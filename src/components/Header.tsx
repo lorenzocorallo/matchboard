@@ -10,15 +10,14 @@ const Header = ({ title, backPath }: Props) => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="sticky top-0 w-full bg-white dark:bg-slate-800 pt-3">
+		<div className="w-full py-3 border-b-[1px] border-slate-800 dark:border-slate-200 relative">
 			{backPath && (
-				<button onClick={() => navigate(backPath)} className="p-4 absolute left-1 top-1/2 -translate-y-[60%]">
+				<button onClick={() => navigate(backPath)} className="p-4 absolute left-1 top-1/2 -translate-y-[50%]">
 					<IoArrowBack size={32} />
 				</button>
 			)}
 			<h1 className="text-3xl">Burraco</h1>
 			{title && <h2 className="text-xl ">{title}</h2>}
-			<hr className="my-3 dark:border-white " />
 		</div>
 	);
 };

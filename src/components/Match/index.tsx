@@ -77,12 +77,12 @@ const Match = () => {
 			{match ? (
 				<div className="px-5 w-full flex flex-col flex-1 gap-4 py-4">
 					<div className="flex justify-between">
-						<p className={match.finished ? "text-green-400" : "text-yellow-400"}>
+						<p className={match.finished ? "text-green-400" : "dark:text-yellow-400 text-orange-400"}>
 							{match.finished ? "Finita" : "In Corso"}
 						</p>
 						<p>{match.date.toLocaleDateString()}</p>
 					</div>
-					<div className="flex w-full border-[1px] flex-1 rounded-xl overflow-hidden">
+					<div className="flex w-full border-[1px] flex-1 rounded-xl overflow-hidden border-slate-600 dark:border-white">
 						{match.players.map((p, i) => (
 							<MatchPlayer
 								player={p}

@@ -20,7 +20,7 @@ const TextField = (
 				id={id}
 				className={`${fullWidth ? "w-full" : ""} ${
 					fullHeight ? "h-full" : ""
-				} block p-2 outline-none border-none rounded-md bg-slate-200 dark:bg-slate-500 ${className}`}
+				} block p-2 outline-none border-none rounded-md bg-white dark:bg-slate-500 ${className}`}
 				{...props}
 			/>
 		</div>
