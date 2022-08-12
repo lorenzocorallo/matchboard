@@ -22,18 +22,14 @@ const PointsPrompt = ({ modifyPoint, active, onValue, onClose, onDelete }: Props
 		setValue("");
 	};
 
-	const handleInputFocus = useCallback(() => {
+	useEffect(() => {
 		if (!inputRef.current) return;
 		if (active) {
 			inputRef.current.focus();
 		} else {
 			inputRef.current.blur();
 		}
-	}, [active, inputRef]);
-
-	useEffect(() => {
-		setTimeout(handleInputFocus, modifyPoint ? 600 : 0);
-	}, [handleInputFocus, modifyPoint]);
+	}, [inputRef, active]);
 
 	return (
 		<form
