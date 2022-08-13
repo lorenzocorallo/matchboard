@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { IoArrowForward, IoHandRight, IoTrash } from "react-icons/io5";
+import { IoArrowForward, IoTrash } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { MatchesContext } from "../../context/MatchesContext";
