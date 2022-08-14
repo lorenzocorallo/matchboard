@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Match from "../../types/Match";
+import Paper from "../Paper";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	match: Match;
@@ -8,7 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const MatchCard = ({ match: m }: Props) => {
 	return (
 		<Link to={`/match/${m.id}`}>
-			<div className="dark:bg-slate-600 bg-white w-full my-3 rounded-xl cursor-pointer p-5 text-left">
+			<Paper className="w-full cursor-pointer text-left">
 				<p>{m.name}</p>
 				<div className="flex justify-between">
 					<p className={m.finished ? "text-green-400" : "text-orange-400 dark:text-yellow-400"}>
@@ -24,7 +25,7 @@ const MatchCard = ({ match: m }: Props) => {
 						})}
 					</p>
 				</div>
-			</div>
+			</Paper>
 		</Link>
 	);
 };

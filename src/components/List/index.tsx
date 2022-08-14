@@ -9,7 +9,7 @@ import MatchCard from "./MatchCard";
 const Matches = () => {
 	const { matches } = useContext(MatchesContext);
 	return matches.length > 0 ? (
-		<div className="px-5 py-2 w-full flex flex-col flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+		<div className="p-4 gap-4 w-full flex flex-col flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
 			{matches.map((m) => (
 				<MatchCard match={m} key={m.id} />
 			))}
@@ -26,7 +26,7 @@ const List = () => {
 		<Wrapper>
 			<Header title="Lista partite" />
 			<Matches />
-			<div className="flex w-full border-t-[1px] border-slate-800 dark:border-slate-200 justify-center items-center py-2 px-5">
+			<div className="flex w-full border-t-[1px] border-slate-800 dark:border-slate-200 justify-center items-center py-2 px-4">
 				<Link to="/new" className="w-full">
 					<Button theme="success" className="text-lg w-full mx-0 flex-1">
 						Nuova Partita

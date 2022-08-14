@@ -16,13 +16,15 @@ interface Props extends React.HTMLAttributes<HTMLFormElement> {
 	type?: React.HTMLInputTypeAttribute;
 }
 
-const Prompt = ({ value, active, onValue, onClose, onDelete, label, type }: Props) => {
-	const [localValue, setLocalValue] = useState<string>(value?.toString() || "");
+const Prompt = ({ value: prevValue, active, onValue, onClose, onDelete, label, type }: Props) => {
+	const [value, setValue] = useState<string>("");
+	const [isChange, setIsChange] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
-		onValue(localValue);
-		setLocalValue("");
+		onValue(value);
+		onClose();
+		setValue("");
 	};
 
 	useEffect(() => {
@@ -31,28 +33,32 @@ const Prompt = ({ value, active, onValue, onClose, onDelete, label, type }: Prop
 		else inputRef.current.blur();
 	}, [inputRef, active]);
 
+	useEffect(() => {
+		if (!prevValue || prevValue.length === 0) return;
+		setIsChange(true);
+		setValue(prevValue);
+	}, [prevValue]);
+
 	return (
 		<Overlay active={active} onClose={onClose}>
 			<form onSubmit={handleSubmit}>
-				<p className="text-xl font-bold">
-					{label || (localValue ? "Modifica punteggio" : "Inserisci nuovo punteggio")}
-				</p>
+				<p className="text-xl font-bold">{label || (isChange ? "Modifica punteggio" : "Inserisci nuovo punteggio")}</p>
 				<div className="flex justify-center items-center">
 					<TextField
 						autoFocus
 						ref={inputRef}
 						type={type || "text"}
 						value={value}
-						onChange={(e) => setLocalValue(e.target.value)}
+						onChange={(e) => setValue(e.target.value)}
 					/>
 					<Button theme="success" type="submit">
 						<IoCheckmark size={24} />
 					</Button>
 				</div>
-				{localValue && (
+				{isChange && (
 					<>
 						<p className="text-gray-600 dark:text-gray-400 pointer-events-none select-none">
-							Prima della modifica: <strong>{localValue}</strong>
+							Prima della modifica: <strong>{prevValue}</strong>
 						</p>
 						<Button theme="error" className="mt-3" onClick={onDelete} type="button">
 							Rimuovi

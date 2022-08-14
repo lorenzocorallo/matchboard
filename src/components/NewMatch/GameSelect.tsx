@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { GAMES } from "../../constants";
 import { Game as GameType } from "../../types/Match";
 import Header from "../Header";
+import Paper from "../Paper";
 import Wrapper from "../Wrapper";
 
 interface GameProps {
@@ -10,8 +11,8 @@ interface GameProps {
 
 const Game = ({ game }: GameProps) => {
 	return (
-		<Link to={`/new/${game}`} className="dark:bg-slate-700 bg-white w-full p-2 rounded-xl text-xl">
-			{game[0].toUpperCase() + game.substring(1)}
+		<Link to={`/new/${game}`} className="w-full text-xl">
+			<Paper>{game[0].toUpperCase() + game.substring(1)}</Paper>
 		</Link>
 	);
 };

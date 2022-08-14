@@ -15,6 +15,7 @@ import Prompt from "../Prompt";
 import Burraco from "./games/Burraco";
 import Macchiavelli from "./games/Macchiavelli";
 import Scopa from "./games/Scopa";
+import Paper from "../Paper";
 
 interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
 	player: PlayerType;
@@ -121,7 +122,7 @@ const NewMatch = () => {
 				{game === "burraco" && <Burraco onPointsToWin={handleSetPoints} />}
 				{game === "macchiavelli" && <Macchiavelli onPointsToLose={handleSetPoints} />}
 				<div className="flex-1 w-full">
-					<div className="bg-white dark:bg-slate-700 rounded-xl p-2">
+					<Paper>
 						<div className="flex items-center justify-between">
 							<p className="text-lg">Giocatori/Squadre</p>
 							<Button className="m-0 focus:bg-slate-500" onClick={() => setAddPlayerActive(true)}>
@@ -130,12 +131,12 @@ const NewMatch = () => {
 						</div>
 						{!players.length && (
 							<div className="flex mt-2">
-								<Button className="flex-1 m-0 bg-blue-600 hover:bg-blue-500" onClick={handleDefaultPlayers}>
+								<Button className="flex-1 m-0" theme="blue" onClick={handleDefaultPlayers}>
 									Utilizza predefinite
 								</Button>
 							</div>
 						)}
-					</div>
+					</Paper>
 					{players.map((player, i) => (
 						<Player index={i + 1} player={player} key={player.id} onDelete={handleDeletePlayer} />
 					))}

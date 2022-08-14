@@ -19,8 +19,6 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 	};
 
 	const handleOnPoints = (points: string) => {
-		setActive(false);
-
 		const newPlayer = { ...player };
 		newPlayer.points[index] = parseInt(points);
 		newPlayer.score = newPlayer.points.reduce((acc, cur) => acc + cur, 0);

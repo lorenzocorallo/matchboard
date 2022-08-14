@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { IoPencil } from "react-icons/io5";
+import Paper from "../../Paper";
 import Prompt from "../../Prompt";
 import Switch from "../../Switch";
 
@@ -22,7 +23,6 @@ const CustomPoints = ({ isCustom, onValue = () => {} }: CustomPointsProps) => {
 		setLabel(value);
 		const points = parseInt(value);
 		onValue(points);
-		setActive(false);
 	};
 
 	return (
@@ -56,12 +56,16 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const PointsSelect = ({ points, label, isWinMethod = true, onValue = () => {}, showCustom = true }: Props) => {
 	console.log();
 
-	const [p, setP] = useState<number>(points[parseInt((points.length / 2).toFixed(0)) - 1]);
+	const [p, setP] = useState<number>(0);
 	const [isCustom, setIsCustom] = useState<boolean>(false);
 
 	useEffect(() => {
 		onValue(p);
 	}, [onValue, p]);
+
+	useEffect(() => {
+		setP(points[parseInt((points.length / 2).toFixed(0)) - 1]);
+	}, [points]);
 
 	const handleOnValue = (n: number, custom: boolean = false) => {
 		setIsCustom(custom);
@@ -69,7 +73,7 @@ const PointsSelect = ({ points, label, isWinMethod = true, onValue = () => {}, s
 	};
 
 	return (
-		<div className="rounded-xl p-4 bg-white dark:bg-slate-700">
+		<Paper>
 			<p className="text-xl">{label || (isWinMethod ? "Punti per vincere" : "Punti per perdere")}</p>
 			<div className="flex justify-center items-center">
 				{points.map((v) => (
@@ -82,7 +86,7 @@ const PointsSelect = ({ points, label, isWinMethod = true, onValue = () => {}, s
 				))}
 			</div>
 			{showCustom && <CustomPoints isCustom={isCustom} onValue={(v) => handleOnValue(v, true)} />}
-		</div>
+		</Paper>
 	);
 };
 
