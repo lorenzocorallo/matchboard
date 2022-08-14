@@ -19,7 +19,7 @@ const Game = ({ game }: GameProps) => {
 const GameSelect = () => {
 	return (
 		<Wrapper>
-			<Header title="Scegli gioco" />
+			<Header backPath="/" title="Scegli gioco" />
 			<div className="flex flex-col items-center gap-4 w-full p-4">
 				{GAMES.map((game) => (
 					<Game game={game} key={game} />

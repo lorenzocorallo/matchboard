@@ -12,11 +12,12 @@ import TextField from "../TextField";
 import Wrapper from "../Wrapper";
 import AddPlayer from "./AddPlayer";
 import Burraco from "./games/Burraco";
+import Macchiavelli from "./games/Macchiavelli";
 import Scopa from "./games/Scopa";
 
 const NewMatch = () => {
 	const [name, setName] = useState<string>("");
-	const [pointsToWin, setPointsToWin] = useState<number>(1000);
+	const [points, setPoints] = useState<number>(1000);
 	const [addPlayerActive, setAddPlayerActive] = useState<boolean>(false);
 	const [players, setPlayers] = useState<Player[]>([]);
 	const { addMatch } = useContext(MatchesContext);
@@ -37,8 +38,9 @@ const NewMatch = () => {
 			finished: false,
 			name,
 			players,
-			pointsToWin,
-			game: "burraco",
+			pointsToWin: points,
+			game: game!,
+			winMethod: game === "macchiavelli" ? "lose" : "win",
 		};
 		addMatch(newMatch);
 		navigate(`/match/${newMatch.id}`);
@@ -54,10 +56,9 @@ const NewMatch = () => {
 		setPlayers((p) => [...p].filter((p) => p.id !== id));
 	};
 
-	const handleSetPointsToWin = (n: number) => {
-		console.log("Set pointsToWin", n);
+	const handleSetPoints = (n: number) => {
 		if (n <= 0) return;
-		setPointsToWin(n);
+		setPoints(n);
 	};
 
 	if (!game) return <></>;
@@ -71,8 +72,9 @@ const NewMatch = () => {
 					{game.toCapitalCase()}
 				</h3>
 				<TextField label="Nome partita" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
-				{game === "scopa" && <Scopa onPointsToWin={handleSetPointsToWin} />}
-				{game === "burraco" && <Burraco onPointsToWin={handleSetPointsToWin} />}
+				{game === "scopa" && <Scopa onPointsToWin={handleSetPoints} onPointsToLose={() => {}} />}
+				{game === "burraco" && <Burraco onPointsToWin={handleSetPoints} onPointsToLose={() => {}} />}
+				{game === "macchiavelli" && <Macchiavelli onPointsToWin={() => {}} onPointsToLose={handleSetPoints} />}
 				<div className="flex-1 w-full">
 					<div className="flex bg-white dark:bg-slate-700 rounded-xl justify-between items-center px-2">
 						<p className="text-lg">Giocatori/Squadre</p>

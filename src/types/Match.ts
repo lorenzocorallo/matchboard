@@ -11,4 +11,5 @@ export default interface Match {
 	game: Game;
 	players: Player[];
 	pointsToWin: number;
+	winMethod: "lose" | "win";
 }

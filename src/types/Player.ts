@@ -4,4 +4,5 @@ export default interface Player {
 	points: number[];
 	score: number;
 	winner?: boolean;
+	loser?: boolean;
 }

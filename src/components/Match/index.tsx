@@ -24,18 +24,43 @@ const Match = () => {
 		});
 		let finished = false;
 		if (newPlayers.some((p) => p.score >= match.pointsToWin)) {
-			const sortedByScore = [...newPlayers].sort((a, b) => b.score - a.score);
-			const ok = sortedByScore[0].score > sortedByScore[1].score;
-			if (ok) {
-				const winnerId = sortedByScore[0].id;
-				newPlayers.forEach((player) => {
-					if (player.id === winnerId) {
-						player.winner = true;
-					} else {
-						player.winner = false;
+			if (match.winMethod === "win") {
+				const sortedByScore = [...newPlayers].sort((a, b) => b.score - a.score);
+				const ok = sortedByScore[0].score > sortedByScore[1].score;
+				if (ok) {
+					const winnerId = sortedByScore[0].id;
+					newPlayers.forEach((player) => {
+						player.winner = player.id === winnerId;
+					});
+					finished = true;
+				}
+			} else {
+				newPlayers.forEach((p) => {
+					if (p.score >= match.pointsToWin) {
+						p.loser = true;
+						p.winner = false;
 					}
 				});
-				finished = true;
+				const filtered = [...newPlayers].filter((p) => !p.loser);
+				if (filtered.length === 1) {
+					newPlayers.forEach((player) => {
+						player.winner = player.id === filtered[0].id;
+						player.loser = player.id !== filtered[0].id;
+					});
+					newPlayers.find((p) => p.id === filtered[0].id)!.winner = true;
+					finished = true;
+				} else if (filtered.length === 0) {
+					const sortedByScore = [...newPlayers].sort((a, b) => a.score - b.score);
+					const ok = sortedByScore[0].score < sortedByScore[1].score;
+					if (ok) {
+						const winnerId = sortedByScore[0].id;
+						newPlayers.forEach((player) => {
+							player.winner = player.id === winnerId;
+							player.loser = player.id !== winnerId;
+						});
+						finished = true;
+					}
+				}
 			}
 		}
 		const newMatch = { ...match, players: newPlayers, finished };
@@ -59,7 +84,7 @@ const Match = () => {
 			date: new Date(),
 			finished: false,
 			id: uuidv4(),
-			players: match.players.map((p) => ({ ...p, points: [], score: 0, winner: false })),
+			players: match.players.map((p) => ({ ...p, points: [], score: 0, winner: false, loser: false })),
 		};
 		addMatch(newMatch);
 		navigate(`/match/${newMatch.id}`);
@@ -81,7 +106,8 @@ const Match = () => {
 							{match.finished ? "Finita" : "In Corso"}
 						</p>
 						<p className="text-gray-600 dark:text-gray-400">
-							Punti per vincere: <span className="text-black dark:text-white">{match.pointsToWin}</span>
+							Punti per {match.winMethod === "win" ? "vincere" : "perdere"}:{" "}
+							<span className="text-black dark:text-white">{match.pointsToWin}</span>
 						</p>
 						<p>{match.date.toLocaleDateString()}</p>
 					</div>

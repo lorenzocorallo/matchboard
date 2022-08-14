@@ -38,7 +38,7 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 			<PointsPrompt active={pointsPromptActive} onValue={handleOnPoints} onClose={closePointsPrompt} />
 			<div
 				className={`flex flex-col flex-1 h-full ${last ? "" : "border-r-[1px]"} border-slate-600 dark:border-white
-				${player.winner && "bg-green-900 bg-opacity-70 text-white"}`}
+				${player.winner && "bg-green-900 bg-opacity-70 text-white"} ${player.loser && "bg-red-900 bg-opacity-70 text-white"}  `}
 			>
 				<div className="p-2 border-b-[1px] border-slate-600 dark:border-white">
 					<p>{player.name}</p>
