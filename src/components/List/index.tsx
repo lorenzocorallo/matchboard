@@ -9,7 +9,7 @@ import MatchCard from "./MatchCard";
 const Matches = () => {
 	const { matches } = useContext(MatchesContext);
 	return matches.length > 0 ? (
-		<div className="p-4 gap-4 w-full flex flex-col flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+		<div className="p-4 gap-4 w-full flex flex-col flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-gray-300 scrollbar-thumb-gray-400 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
 			{matches.map((m) => (
 				<MatchCard match={m} key={m.id} />
 			))}

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { MatchesContext } from "../../context/MatchesContext";
 import Player from "../../types/Player";
@@ -8,6 +8,7 @@ import Button from "../Button";
 import Header from "../Header";
 import Wrapper from "../Wrapper";
 import MatchPlayer from "./MatchPlayer";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Match = () => {
 	const { matches, updateMatch, deleteMatch, addMatch } = useContext(MatchesContext);
@@ -31,6 +32,7 @@ const Match = () => {
 					const winnerId = sortedByScore[0].id;
 					newPlayers.forEach((player) => {
 						player.winner = player.id === winnerId;
+						player.loser = player.id !== winnerId;
 					});
 					finished = true;
 				}
@@ -93,17 +95,22 @@ const Match = () => {
 	useEffect(() => {
 		const match = matches.find((m) => m.id === id);
 		if (!match) return;
-		setMatch(match);
+		setTimeout(() => {
+			setMatch(match);
+		}, 300);
 	}, [matches, id]);
 
 	return (
 		<Wrapper>
-			<Header backPath="/" title={match ? `Partita: ${match.name.trimEnd()}` : "Partita non trovata"} />
+			<Header backPath="/" title={match ? `Partita: ${match.name.trimEnd()}` : "Partita in caricamento"} />
 			{match ? (
 				<div className="px-5 w-full flex flex-col flex-1 gap-4 py-4">
 					<div className="flex justify-between">
-						<p className={match.finished ? "text-green-400" : "dark:text-yellow-400 text-orange-400"}>
-							{match.finished ? "Finita" : "In Corso"}
+						<p>
+							{match.game.toCapitalCase()} &#8226;{" "}
+							<span className={match.finished ? "text-green-400" : "dark:text-yellow-400 text-orange-400"}>
+								{match.finished ? "Finita" : "In Corso"}
+							</span>
 						</p>
 						<p>{match.date.toLocaleDateString()}</p>
 					</div>
@@ -133,9 +140,9 @@ const Match = () => {
 					</div>
 				</div>
 			) : (
-				<Link to="/">
-					<Button>Torna indietro</Button>
-				</Link>
+				<div className="flex-1 grid place-content-center">
+					<LoadingSpinner size={48} />
+				</div>
 			)}
 		</Wrapper>
 	);

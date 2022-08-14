@@ -41,7 +41,7 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 				${player.winner && "bg-green-900 bg-opacity-70 text-white"} ${player.loser && "bg-red-900 bg-opacity-70 text-white"}  `}
 			>
 				<div className="p-2 border-b-[1px] border-slate-600 dark:border-white">
-					<p>{player.name}</p>
+					<p>{player.name.toCapitalCase()}</p>
 				</div>
 
 				<div className="flex-1">

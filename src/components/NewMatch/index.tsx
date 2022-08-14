@@ -56,7 +56,7 @@ const Player = ({ player, index, onDelete }: PlayerProps) => {
 };
 
 const NewMatch = () => {
-	const [name, setName] = useState<string>("");
+	const [name, setName] = useState<string>("Match");
 	const [points, setPoints] = useState<number>(1000);
 	const [addPlayerActive, setAddPlayerActive] = useState<boolean>(false);
 	const [players, setPlayers] = useState<PlayerType[]>([]);
@@ -67,7 +67,6 @@ const NewMatch = () => {
 
 	useEffect(() => {
 		if (!game || !GAMES.includes(game)) return navigate("/new");
-		setName(game.toCapitalCase() + " ");
 	}, [game, navigate]);
 
 	const loseBasedGames = ["macchiavelli"];
@@ -112,12 +111,20 @@ const NewMatch = () => {
 		<Wrapper>
 			<Prompt active={addPlayerActive} onClose={() => setAddPlayerActive(false)} onValue={handleCreatePlayer} />
 			<Header backPath="/new" title="Nuova partita" />
-			<div className="flex flex-col gap-5 p-5 flex-1 w-full">
+			<div className="flex flex-col gap-5 p-5 flex-1 w-full overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-gray-300 scrollbar-thumb-gray-400 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
 				<h3 className="text-xl">
 					<span className="dark:text-gray-400 text-gray-600">Gioco: </span>
 					{game.toCapitalCase()}
 				</h3>
-				<TextField label="Nome partita" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
+				<TextField
+					label="Nome partita"
+					fullWidth
+					value={name}
+					placeholder="Match"
+					onChange={(e) => setName(e.target.value)}
+					onFocus={() => name === "Match" && setName("")}
+					onBlur={() => name === "" && setName("Match")}
+				/>
 				{game === "scopa" && <Scopa onPointsToWin={handleSetPoints} />}
 				{game === "burraco" && <Burraco onPointsToWin={handleSetPoints} />}
 				{game === "macchiavelli" && <Macchiavelli onPointsToLose={handleSetPoints} />}

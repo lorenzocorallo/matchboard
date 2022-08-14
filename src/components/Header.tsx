@@ -16,7 +16,7 @@ const Header = ({ title, backPath }: Props) => {
 					<IoArrowBack size={32} />
 				</button>
 			)}
-			<h1 className="text-3xl">Burraco</h1>
+			<h1 className="text-3xl">MatchBoard</h1>
 			{title && <h2 className="text-xl ">{title}</h2>}
 		</div>
 	);

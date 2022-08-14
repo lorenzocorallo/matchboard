@@ -13,7 +13,7 @@ const TextField = (
 ) => {
 	const id = useId();
 	return (
-		<div className={`flex gap-2 items-center ${inline ? "" : "flex-col"} ${fullHeight ? "h-full" : ""}`}>
+		<div className={`flex gap-2 items-center ${inline ? "" : "flex-col"} ${fullHeight ? "h-full" : ""} `}>
 			{label && <label htmlFor={id}>{label}</label>}
 			<input
 				ref={ref}
