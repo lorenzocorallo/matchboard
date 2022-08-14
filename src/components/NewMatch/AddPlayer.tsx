@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Player from "../../types/Player";
 import Button from "../Button";
@@ -13,6 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 const AddPlayer = ({ active, onClose, onPlayer, ...props }: Props) => {
 	const [name, setName] = useState<string>("");
+	const inputRef = useRef<HTMLInputElement>(null);
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 		const player: Player = {
@@ -24,11 +25,18 @@ const AddPlayer = ({ active, onClose, onPlayer, ...props }: Props) => {
 		onPlayer(player);
 		setName("");
 	};
+
+	useEffect(() => {
+		if (!inputRef.current) return;
+		if (active) inputRef.current.focus();
+		else inputRef.current.blur();
+	}, [inputRef, active]);
+
 	return (
 		<Overlay active={active} onClose={onClose} {...props}>
 			<form className="flex flex-col items-center gap-4" onSubmit={handleSubmit}>
 				<p className="text-xl">Aggiungi giocatore/squadra</p>
-				<TextField label="Nome" inline value={name} onChange={(e) => setName(e.target.value)} />
+				<TextField label="Nome" inline value={name} onChange={(e) => setName(e.target.value)} ref={inputRef} />
 				<Button theme="success" className="text-xl">
 					Conferma
 				</Button>

@@ -1,10 +1,10 @@
-# Punti Burraco
+# MatchBoard
 
 `[ita]`  
-Come da nome, app molto semplice in React per tenere il punteggio a Burraco con funzioni di storico delle partite, auto determinazione del vincitore e multi-squadre.
+App in React per tenere traccia dei punteggi delle tue partite a carte, con funzionalità di cronologia delle partite, proclamazione del vincitore, multi squadre personalizzabili e più giochi dispoinibili.
 
 `[eng]`  
-This is a really simple React app to keep track of score in Burraco matches, with functionalities of match history, auto highlight of the winner and multiple squads matches.
+This is a React app to keep track of card games with multiple functionalities such as match history, winner highlight, multiple customizable squads and multiple games available.
 
 # Notes
 

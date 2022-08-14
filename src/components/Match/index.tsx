@@ -23,7 +23,7 @@ const Match = () => {
 			return player;
 		});
 		let finished = false;
-		if (newPlayers.some((p) => p.score >= 2000)) {
+		if (newPlayers.some((p) => p.score >= match.pointsToWin)) {
 			const sortedByScore = [...newPlayers].sort((a, b) => b.score - a.score);
 			const ok = sortedByScore[0].score > sortedByScore[1].score;
 			if (ok) {
@@ -55,10 +55,10 @@ const Match = () => {
 	const handleRematch = () => {
 		if (!match) return;
 		const newMatch: IMatch = {
+			...match,
 			date: new Date(),
 			finished: false,
 			id: uuidv4(),
-			name: match.name,
 			players: match.players.map((p) => ({ ...p, points: [], score: 0, winner: false })),
 		};
 		addMatch(newMatch);
@@ -79,6 +79,9 @@ const Match = () => {
 					<div className="flex justify-between">
 						<p className={match.finished ? "text-green-400" : "dark:text-yellow-400 text-orange-400"}>
 							{match.finished ? "Finita" : "In Corso"}
+						</p>
+						<p className="text-gray-600 dark:text-gray-400">
+							Punti per vincere: <span className="text-black dark:text-white">{match.pointsToWin}</span>
 						</p>
 						<p>{match.date.toLocaleDateString()}</p>
 					</div>

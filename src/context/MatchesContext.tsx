@@ -18,7 +18,12 @@ export const MatchesContext = createContext<IMatchesContext>({
 
 const sortMatches = (matches: Match[]) => {
 	return [...matches]
-		.map((match: Match) => ({ ...match, date: new Date(match.date) }))
+		.map((match: Match) => ({
+			...match,
+			date: new Date(match.date),
+			game: match.game || "burraco", // here's for migration
+			pointsToWin: match.pointsToWin || 2000, // here's for migration
+		}))
 		.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
 };
 
