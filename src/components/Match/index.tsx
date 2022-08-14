@@ -108,13 +108,13 @@ const Match = () => {
 					<div className="flex justify-between">
 						<p>
 							{match.game.toCapitalCase()} &#8226;{" "}
-							<span className={match.finished ? "text-green-400" : "dark:text-yellow-400 text-orange-400"}>
+							<span className={match.finished ? "text-green-400" : "dark:text-yellow-400 text-orange-500"}>
 								{match.finished ? "Finita" : "In Corso"}
 							</span>
 						</p>
 						<p>{match.date.toLocaleDateString()}</p>
 					</div>
-					<div className="flex w-full border-[1px] flex-1 rounded-xl overflow-hidden border-slate-600 dark:border-white">
+					<div className="flex w-full border-[1px] flex-1 rounded-xl overflow-hidden border-slate-400 dark:border-white">
 						{match.players.map((p, i) => (
 							<MatchPlayer
 								player={p}

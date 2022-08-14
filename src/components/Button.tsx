@@ -15,7 +15,7 @@ const Button = ({ theme = "default", children, disabled, className = "", ...prop
 			color = "bg-gray-300 hover:bg-gray-200 text-black dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500";
 			break;
 		case "error":
-			color = "bg-red-600 hover:bg-red-700";
+			color = "text-white bg-red-600 hover:bg-red-700";
 			break;
 		default:
 			break;

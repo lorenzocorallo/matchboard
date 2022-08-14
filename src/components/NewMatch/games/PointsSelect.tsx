@@ -54,8 +54,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	showCustom?: boolean;
 }
 const PointsSelect = ({ points, label, isWinMethod = true, onValue = () => {}, showCustom = true }: Props) => {
-	console.log();
-
 	const [p, setP] = useState<number>(0);
 	const [isCustom, setIsCustom] = useState<boolean>(false);
 
@@ -78,6 +76,7 @@ const PointsSelect = ({ points, label, isWinMethod = true, onValue = () => {}, s
 			<div className="flex justify-center items-center">
 				{points.map((v) => (
 					<Switch
+						key={v}
 						active={p === v}
 						onClick={(_) => handleOnValue(v)}
 						activeLabel={v.toString()}

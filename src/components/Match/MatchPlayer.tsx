@@ -37,10 +37,10 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 		<>
 			<Prompt active={active} onValue={handleOnPoints} onClose={close} />
 			<div
-				className={`flex flex-col flex-1 h-full ${last ? "" : "border-r-[1px]"} border-slate-600 dark:border-white
+				className={`flex flex-col flex-1 h-full ${last ? "" : "border-r-[1px]"} border-slate-400 dark:border-white
 				${player.winner && "bg-green-900 bg-opacity-70 text-white"} ${player.loser && "bg-red-900 bg-opacity-70 text-white"}  `}
 			>
-				<div className="p-2 border-b-[1px] border-slate-600 dark:border-white">
+				<div className="p-2 border-b-[1px] border-slate-400 dark:border-white">
 					<p>{player.name.toCapitalCase()}</p>
 				</div>
 
@@ -55,7 +55,7 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 					))}
 				</div>
 
-				<p className="py-3 border-y-[1px] border-slate-600 dark:border-white">
+				<p className="py-3 border-y-[1px] border-slate-400 dark:border-white">
 					<span className="opacity-60 pr-2">Tot:</span>
 					{player.score}
 				</p>

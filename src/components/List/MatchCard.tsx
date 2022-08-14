@@ -12,7 +12,9 @@ const MatchCard = ({ match: m }: Props) => {
 			<Paper className="w-full cursor-pointer text-left">
 				<div className="flex justify-between items-center">
 					<p>{m.name}</p>
-					<p className="px-2 py-1 bg-green-800 rounded-xl">{m.game.toCapitalCase()}</p>
+					<p className="px-2 py-1 bg-green-100 dark:bg-green-800 rounded-xl dark:text-white">
+						{m.game.toCapitalCase()}
+					</p>
 				</div>
 				<div className="flex justify-between">
 					<p className={m.finished ? "text-green-400" : "text-orange-400 dark:text-yellow-400"}>

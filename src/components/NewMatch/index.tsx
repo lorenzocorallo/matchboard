@@ -109,7 +109,12 @@ const NewMatch = () => {
 
 	return game ? (
 		<Wrapper>
-			<Prompt active={addPlayerActive} onClose={() => setAddPlayerActive(false)} onValue={handleCreatePlayer} />
+			<Prompt
+				active={addPlayerActive}
+				onClose={() => setAddPlayerActive(false)}
+				onValue={handleCreatePlayer}
+				label="Inserisci nome"
+			/>
 			<Header backPath="/new" title="Nuova partita" />
 			<div className="flex flex-col gap-5 p-5 flex-1 w-full overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-gray-300 scrollbar-thumb-gray-400 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
 				<h3 className="text-xl">
