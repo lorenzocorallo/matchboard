@@ -1,8 +1,8 @@
 import BaseProps from "../BaseProps";
-import PointsToLose from "./PointsToLose";
+import PointsSelect from "../PointsSelect";
 
 const Macchiavelli = ({ onPointsToLose }: BaseProps) => {
-	return <PointsToLose onPointsToLose={onPointsToLose} onPointsToWin={() => {}} />;
+	return <PointsSelect onValue={onPointsToLose} points={[51, 101, 151]} isWinMethod={false} />;
 };
 
 export default Macchiavelli;

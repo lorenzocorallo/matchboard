@@ -24,7 +24,7 @@ const Match = () => {
 		});
 		let finished = false;
 		if (newPlayers.some((p) => p.score >= match.pointsToWin)) {
-			if (match.winMethod === "win") {
+			if (match.isWinMethod) {
 				const sortedByScore = [...newPlayers].sort((a, b) => b.score - a.score);
 				const ok = sortedByScore[0].score > sortedByScore[1].score;
 				if (ok) {
@@ -105,10 +105,6 @@ const Match = () => {
 						<p className={match.finished ? "text-green-400" : "dark:text-yellow-400 text-orange-400"}>
 							{match.finished ? "Finita" : "In Corso"}
 						</p>
-						<p className="text-gray-600 dark:text-gray-400">
-							Punti per {match.winMethod === "win" ? "vincere" : "perdere"}:{" "}
-							<span className="text-black dark:text-white">{match.pointsToWin}</span>
-						</p>
 						<p>{match.date.toLocaleDateString()}</p>
 					</div>
 					<div className="flex w-full border-[1px] flex-1 rounded-xl overflow-hidden border-slate-600 dark:border-white">
@@ -121,6 +117,10 @@ const Match = () => {
 							/>
 						))}
 					</div>
+					<p className="text-gray-600 dark:text-gray-400">
+						Punti per {match.isWinMethod ? "vincere" : "perdere"}:
+						<span className="text-black dark:text-white"> {match.pointsToWin}</span>
+					</p>
 					<div className="block">
 						{match.finished && (
 							<Button theme="success" onClick={handleRematch}>

@@ -5,21 +5,60 @@ import { v4 as uuidv4 } from "uuid";
 import { GAMES } from "../../constants";
 import { MatchesContext } from "../../context/MatchesContext";
 import Match, { Game } from "../../types/Match";
-import Player from "../../types/Player";
+import PlayerType from "../../types/Player";
+import { createPlayer } from "../../utils/players";
 import Button from "../Button";
 import Header from "../Header";
 import TextField from "../TextField";
 import Wrapper from "../Wrapper";
-import AddPlayer from "./AddPlayer";
+import Prompt from "../Prompt";
 import Burraco from "./games/Burraco";
 import Macchiavelli from "./games/Macchiavelli";
 import Scopa from "./games/Scopa";
+
+interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
+	player: PlayerType;
+	onDelete: (id: string) => void;
+	index: number;
+}
+const Player = ({ player, index, onDelete }: PlayerProps) => {
+	const [active, setActive] = useState<boolean>(false);
+	const close = () => {
+		setActive(false);
+	};
+
+	const open = () => {
+		setActive(true);
+	};
+
+	const handleModifyPlayer = (name: string) => {
+		if (name.length === 0) return;
+		player.name = name;
+	};
+
+	return (
+		<>
+			<Prompt active={active} onClose={close} value={player.name} onValue={handleModifyPlayer} label="Modifica nome" />
+			<div
+				className="w-full flex items-center gap-1 bg-white dark:bg-slate-700 rounded-xl p-2 my-2 cursor-pointer	"
+				onClick={open}
+			>
+				<span className="text-gray-500 dark:text-gray-400">G{index}</span>
+				<IoArrowForward size={18} className="text-gray-500 dark:text-gray-400" />
+				<p className="flex-1 text-left">{player.name}</p>
+				<Button theme="error" className="m-0 px-2 py-2" onClick={() => onDelete(player.id)}>
+					<IoTrash size={18} />
+				</Button>
+			</div>
+		</>
+	);
+};
 
 const NewMatch = () => {
 	const [name, setName] = useState<string>("");
 	const [points, setPoints] = useState<number>(1000);
 	const [addPlayerActive, setAddPlayerActive] = useState<boolean>(false);
-	const [players, setPlayers] = useState<Player[]>([]);
+	const [players, setPlayers] = useState<PlayerType[]>([]);
 	const { addMatch } = useContext(MatchesContext);
 	const navigate = useNavigate();
 
@@ -29,6 +68,9 @@ const NewMatch = () => {
 		if (!game || !GAMES.includes(game)) return navigate("/new");
 		setName(game.toCapitalCase() + " ");
 	}, [game, navigate]);
+
+	const loseBasedGames = ["macchiavelli"];
+	const isWinMethod = !loseBasedGames.includes(game!);
 
 	const handleCreate = () => {
 		if (players.length < 2) return;
@@ -40,15 +82,15 @@ const NewMatch = () => {
 			players,
 			pointsToWin: points,
 			game: game!,
-			winMethod: game === "macchiavelli" ? "lose" : "win",
+			isWinMethod,
 		};
 		addMatch(newMatch);
 		navigate(`/match/${newMatch.id}`);
 	};
 
-	const handleAddPlayer = (player: Player) => {
+	const handleCreatePlayer = (name: string) => {
 		setAddPlayerActive(false);
-		const newPlayers = [...players, player];
+		const newPlayers = [...players, createPlayer({ name })];
 		setPlayers(newPlayers);
 	};
 
@@ -61,10 +103,13 @@ const NewMatch = () => {
 		setPoints(n);
 	};
 
-	if (!game) return <></>;
-	return (
+	const handleDefaultPlayers = () => {
+		setPlayers([createPlayer({ name: "Noi" }), createPlayer({ name: "Voi" })]);
+	};
+
+	return game ? (
 		<Wrapper>
-			<AddPlayer active={addPlayerActive} onClose={() => setAddPlayerActive(false)} onPlayer={handleAddPlayer} />
+			<Prompt active={addPlayerActive} onClose={() => setAddPlayerActive(false)} onValue={handleCreatePlayer} />
 			<Header backPath="/new" title="Nuova partita" />
 			<div className="flex flex-col gap-5 p-5 flex-1 w-full">
 				<h3 className="text-xl">
@@ -72,33 +117,38 @@ const NewMatch = () => {
 					{game.toCapitalCase()}
 				</h3>
 				<TextField label="Nome partita" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
-				{game === "scopa" && <Scopa onPointsToWin={handleSetPoints} onPointsToLose={() => {}} />}
-				{game === "burraco" && <Burraco onPointsToWin={handleSetPoints} onPointsToLose={() => {}} />}
-				{game === "macchiavelli" && <Macchiavelli onPointsToWin={() => {}} onPointsToLose={handleSetPoints} />}
+				{game === "scopa" && <Scopa onPointsToWin={handleSetPoints} />}
+				{game === "burraco" && <Burraco onPointsToWin={handleSetPoints} />}
+				{game === "macchiavelli" && <Macchiavelli onPointsToLose={handleSetPoints} />}
 				<div className="flex-1 w-full">
-					<div className="flex bg-white dark:bg-slate-700 rounded-xl justify-between items-center px-2">
-						<p className="text-lg">Giocatori/Squadre</p>
-						<Button className="mx-0 focus:bg-slate-500" onClick={() => setAddPlayerActive(true)}>
-							Aggiungi
-						</Button>
-					</div>
-					{players.map((player, i) => (
-						<div key={player.id} className="flex items-center gap-1 bg-white dark:bg-slate-700 rounded-xl p-2 my-2">
-							<span className="text-gray-500 dark:text-gray-400">G{i + 1}</span>
-							<IoArrowForward size={18} className="text-gray-500 dark:text-gray-400" />
-							<p className="flex-1 text-left">{player.name}</p>
-							<Button theme="error" className="m-0 px-2 py-2" onClick={() => handleDeletePlayer(player.id)}>
-								<IoTrash size={18} />
+					<div className="bg-white dark:bg-slate-700 rounded-xl p-2">
+						<div className="flex items-center justify-between">
+							<p className="text-lg">Giocatori/Squadre</p>
+							<Button className="m-0 focus:bg-slate-500" onClick={() => setAddPlayerActive(true)}>
+								Aggiungi
 							</Button>
 						</div>
+						{!players.length && (
+							<div className="flex mt-2">
+								<Button className="flex-1 m-0 bg-blue-600 hover:bg-blue-500" onClick={handleDefaultPlayers}>
+									Utilizza predefinite
+								</Button>
+							</div>
+						)}
+					</div>
+					{players.map((player, i) => (
+						<Player index={i + 1} player={player} key={player.id} onDelete={handleDeletePlayer} />
 					))}
 				</div>
 
+				{players.length < 2 && <p className="text-red-600 dark:text-red-400">Aggiungi almeno 2 squadre</p>}
 				<Button theme="success" className="text-2xl" disabled={players.length < 2} onClick={handleCreate}>
 					Inizia partita
 				</Button>
 			</div>
 		</Wrapper>
+	) : (
+		<></>
 	);
 };
 

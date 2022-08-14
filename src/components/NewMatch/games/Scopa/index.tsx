@@ -1,8 +1,8 @@
 import BaseProps from "../BaseProps";
-import PointsToWin from "./PointsToWin";
+import PointsSelect from "../PointsSelect";
 
 const Scopa = ({ onPointsToWin }: BaseProps) => {
-	return <PointsToWin onPointsToWin={onPointsToWin} onPointsToLose={() => {}} />;
+	return <PointsSelect points={[11, 21, 31]} onValue={onPointsToWin} />;
 };
 
 export default Scopa;

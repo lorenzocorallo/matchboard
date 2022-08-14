@@ -2,50 +2,57 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
-import Button from "../Button";
-import Overlay from "../Overlay";
-import TextField from "../TextField";
+import Button from "./Button";
+import Overlay from "./Overlay";
+import TextField from "./TextField";
 
 interface Props extends React.HTMLAttributes<HTMLFormElement> {
 	active: boolean;
-	onValue: (num: number) => void;
+	onValue: (value: string) => void;
 	onClose: () => void;
 	onDelete?: () => void;
-	modifyPoint?: number;
+	value?: string;
+	label?: string;
+	type?: React.HTMLInputTypeAttribute;
 }
 
-const PointsPrompt = ({ modifyPoint, active, onValue, onClose, onDelete }: Props) => {
-	const [value, setValue] = useState<string>(modifyPoint?.toString() || "");
+const Prompt = ({ value, active, onValue, onClose, onDelete, label, type }: Props) => {
+	const [localValue, setLocalValue] = useState<string>(value?.toString() || "");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
-		onValue(parseInt(value) || 0);
-		setValue("");
+		onValue(localValue);
+		setLocalValue("");
 	};
 
 	useEffect(() => {
 		if (!inputRef.current) return;
-		if (active) {
-			inputRef.current.focus();
-		} else {
-			inputRef.current.blur();
-		}
+		if (active) inputRef.current.focus();
+		else inputRef.current.blur();
 	}, [inputRef, active]);
 
 	return (
 		<Overlay active={active} onClose={onClose}>
 			<form onSubmit={handleSubmit}>
-				<p className="text-xl font-bold">{modifyPoint ? "Modifica" : "Inserisci nuovo"} punteggio</p>
+				<p className="text-xl font-bold">
+					{label || (localValue ? "Modifica punteggio" : "Inserisci nuovo punteggio")}
+				</p>
 				<div className="flex justify-center items-center">
-					<TextField autoFocus ref={inputRef} type="number" value={value} onChange={(e) => setValue(e.target.value)} />
+					<TextField
+						autoFocus
+						ref={inputRef}
+						type={type || "text"}
+						value={value}
+						onChange={(e) => setLocalValue(e.target.value)}
+					/>
 					<Button theme="success" type="submit">
 						<IoCheckmark size={24} />
 					</Button>
 				</div>
-				{modifyPoint && (
+				{localValue && (
 					<>
 						<p className="text-gray-600 dark:text-gray-400 pointer-events-none select-none">
-							Punteggio prima della modifica: <strong>{modifyPoint}</strong>
+							Prima della modifica: <strong>{localValue}</strong>
 						</p>
 						<Button theme="error" className="mt-3" onClick={onDelete} type="button">
 							Rimuovi
@@ -57,4 +64,4 @@ const PointsPrompt = ({ modifyPoint, active, onValue, onClose, onDelete }: Props
 	);
 };
 
-export default PointsPrompt;
+export default Prompt;

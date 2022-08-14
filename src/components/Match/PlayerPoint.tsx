@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useLongPress from "../../hooks/useLongPress";
 import Player from "../../types/Player";
-import PointsPrompt from "./PointsPrompt";
+import Prompt from "../Prompt";
 
 interface Props {
 	player: Player;
@@ -11,18 +11,18 @@ interface Props {
 
 const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 	const point = player.points[index];
-	const [modifyPromptActive, setModifyPromptActive] = useState(false);
+	const [active, setActive] = useState(false);
 
 	const handleOpenModifyPoints = () => {
 		if (!point) return;
-		setModifyPromptActive(true);
+		setActive(true);
 	};
 
-	const handleOnPoints = (points: number) => {
-		setModifyPromptActive(false);
-		if (points === 0) return;
+	const handleOnPoints = (points: string) => {
+		setActive(false);
+
 		const newPlayer = { ...player };
-		newPlayer.points[index] = points;
+		newPlayer.points[index] = parseInt(points);
 		newPlayer.score = newPlayer.points.reduce((acc, cur) => acc + cur, 0);
 		onPlayerChange(newPlayer);
 	};
@@ -37,11 +37,12 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 	const { handlers } = useLongPress(handleOpenModifyPoints);
 	return (
 		<>
-			<PointsPrompt
-				modifyPoint={point}
-				active={modifyPromptActive}
+			<Prompt
+				value={point.toString()}
+				type="number"
+				active={active}
 				onValue={handleOnPoints}
-				onClose={() => setModifyPromptActive(false)}
+				onClose={() => setActive(false)}
 				onDelete={handleDelete}
 			/>
 

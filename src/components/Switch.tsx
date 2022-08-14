@@ -1,8 +1,8 @@
 import Button from "./Button";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-	activeLabel?: string;
-	inactiveLabel?: string;
+	activeLabel?: string | JSX.Element;
+	inactiveLabel?: string | JSX.Element;
 	onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 	active: boolean;
 }

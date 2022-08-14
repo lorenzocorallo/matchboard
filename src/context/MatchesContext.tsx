@@ -21,8 +21,10 @@ const sortMatches = (matches: Match[]) => {
 		.map((match: Match) => ({
 			...match,
 			date: new Date(match.date),
-			game: match.game || "burraco", // here's for migration
-			pointsToWin: match.pointsToWin || 2000, // here's for migration
+			/* compatibility with game started in previous versions */
+			game: match.game || "burraco",
+			pointsToWin: match.pointsToWin || 2000,
+			isWinMethod: match.isWinMethod || true,
 		}))
 		.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
 };

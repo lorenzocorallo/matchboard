@@ -3,7 +3,7 @@ import { IoAdd } from "react-icons/io5";
 import Player from "../../types/Player";
 import Button from "../Button";
 import PlayerPoint from "./PlayerPoint";
-import PointsPrompt from "./PointsPrompt";
+import Prompt from "../Prompt";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	player: Player;
@@ -12,10 +12,11 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
-	const [pointsPromptActive, setPointsPromptActive] = useState(false);
+	const [active, setActive] = useState(false);
 
-	const handleOnPoints = (points: number) => {
-		setPointsPromptActive(false);
+	const handleOnPoints = (value: string) => {
+		setActive(false);
+		const points = parseInt(value);
 		if (points === 0) return;
 		const newPlayer = {
 			...player,
@@ -25,17 +26,17 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 		onPlayerChange(newPlayer);
 	};
 
-	const openPointsPrompt = () => {
-		setPointsPromptActive(true);
+	const open = () => {
+		setActive(true);
 	};
 
-	const closePointsPrompt = () => {
-		setPointsPromptActive(false);
+	const close = () => {
+		setActive(false);
 	};
 
 	return (
 		<>
-			<PointsPrompt active={pointsPromptActive} onValue={handleOnPoints} onClose={closePointsPrompt} />
+			<Prompt active={active} onValue={handleOnPoints} onClose={close} />
 			<div
 				className={`flex flex-col flex-1 h-full ${last ? "" : "border-r-[1px]"} border-slate-600 dark:border-white
 				${player.winner && "bg-green-900 bg-opacity-70 text-white"} ${player.loser && "bg-red-900 bg-opacity-70 text-white"}  `}
@@ -60,7 +61,7 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 					{player.score}
 				</p>
 
-				<Button theme="success" className="text-2xl py-1 flex justify-center" onClick={openPointsPrompt}>
+				<Button theme="success" className="text-2xl py-1 flex justify-center" onClick={open}>
 					<IoAdd size={28} />
 				</Button>
 			</div>
