@@ -70,10 +70,10 @@ const NewMatch = () => {
 	}, [game, navigate]);
 
 	const loseBasedGames = ["macchiavelli"];
-	const isWinMethod = !loseBasedGames.includes(game!);
 
 	const handleCreate = () => {
-		if (players.length < 2) return;
+		if (players.length < 2 || !game) return;
+		const isWinMethod = !loseBasedGames.includes(game);
 		const newMatch: Match = {
 			id: uuidv4(),
 			date: new Date(),
@@ -81,7 +81,7 @@ const NewMatch = () => {
 			name,
 			players,
 			pointsToWin: points,
-			game: game!,
+			game,
 			isWinMethod,
 		};
 		addMatch(newMatch);
