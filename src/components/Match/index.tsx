@@ -64,6 +64,11 @@ const Match = () => {
 					}
 				}
 			}
+		} else {
+			newPlayers.forEach((p) => {
+				p.winner = false;
+				p.loser = false;
+			});
 		}
 		const newMatch = { ...match, players: newPlayers, finished };
 		setMatch(newMatch);

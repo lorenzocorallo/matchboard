@@ -15,8 +15,7 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 	const [active, setActive] = useState(false);
 
 	const handleOnPoints = (value: string) => {
-		const points = parseInt(value);
-		if (points === 0) return;
+		const points = value.toInt();
 		const newPlayer = {
 			...player,
 			points: [...player.points, points],

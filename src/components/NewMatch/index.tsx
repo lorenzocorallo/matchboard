@@ -74,7 +74,6 @@ const NewMatch = () => {
 	const handleCreate = () => {
 		if (players.length < 2 || !game) return;
 		const isWinMethod = !loseBasedGames.includes(game);
-		console.log(game, isWinMethod);
 		const newMatch: Match = {
 			id: uuidv4(),
 			date: new Date(),

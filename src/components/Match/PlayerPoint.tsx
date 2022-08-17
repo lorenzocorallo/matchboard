@@ -10,7 +10,7 @@ interface Props {
 }
 
 const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
-	const point = player.points[index];
+	const [point] = useState<number>(player.points[index]);
 	const [active, setActive] = useState(false);
 
 	const handleOpenModifyPoints = () => {
@@ -18,11 +18,10 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 		setActive(true);
 	};
 
-	const handleOnPoints = (points: string) => {
+	const handleOnValue = (value: string) => {
 		const newPlayer = { ...player };
-		const pointsInt = parseInt(points);
-		const fixed = isNaN(pointsInt) ? 0 : pointsInt;
-		newPlayer.points[index] = fixed;
+		const points = value.toInt();
+		newPlayer.points[index] = points;
 		newPlayer.score = newPlayer.points.reduce((acc, cur) => acc + cur, 0);
 		onPlayerChange(newPlayer);
 	};
@@ -41,7 +40,7 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 				value={point.toString()}
 				type="number"
 				active={active}
-				onValue={handleOnPoints}
+				onValue={handleOnValue}
 				onClose={() => setActive(false)}
 				onDelete={handleDelete}
 			/>
