@@ -16,7 +16,7 @@ interface Props extends React.HTMLAttributes<HTMLFormElement> {
 	type?: React.HTMLInputTypeAttribute;
 }
 
-const Prompt = ({ value: prevValue, active, onValue, onClose, onDelete, label, type }: Props) => {
+const Prompt = ({ value: prevValue, active, onValue, onClose, onDelete, label, type = "text" }: Props) => {
 	const [value, setValue] = useState<string>("");
 	const [isChange, setIsChange] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -44,13 +44,7 @@ const Prompt = ({ value: prevValue, active, onValue, onClose, onDelete, label, t
 			<form onSubmit={handleSubmit}>
 				<p className="text-xl font-bold">{label || (isChange ? "Modifica punteggio" : "Inserisci nuovo punteggio")}</p>
 				<div className="flex justify-center items-center">
-					<TextField
-						autoFocus
-						ref={inputRef}
-						type={type || "text"}
-						value={value}
-						onChange={(e) => setValue(e.target.value)}
-					/>
+					<TextField autoFocus ref={inputRef} type={type} value={value} onChange={(e) => setValue(e.target.value)} />
 					<Button theme="success" type="submit">
 						<IoCheckmark size={24} />
 					</Button>
@@ -60,9 +54,11 @@ const Prompt = ({ value: prevValue, active, onValue, onClose, onDelete, label, t
 						<p className="text-gray-600 dark:text-gray-400 pointer-events-none select-none">
 							Prima della modifica: <strong>{prevValue}</strong>
 						</p>
-						<Button theme="error" className="mt-3" onClick={onDelete} type="button">
-							Rimuovi
-						</Button>
+						{onDelete && (
+							<Button theme="error" className="mt-3" onClick={onDelete} type="button">
+								Rimuovi
+							</Button>
+						)}
 					</>
 				)}
 			</form>

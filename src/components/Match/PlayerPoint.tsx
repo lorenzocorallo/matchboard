@@ -20,7 +20,9 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 
 	const handleOnPoints = (points: string) => {
 		const newPlayer = { ...player };
-		newPlayer.points[index] = parseInt(points);
+		const pointsInt = parseInt(points);
+		const fixed = isNaN(pointsInt) ? 0 : pointsInt;
+		newPlayer.points[index] = fixed;
 		newPlayer.score = newPlayer.points.reduce((acc, cur) => acc + cur, 0);
 		onPlayerChange(newPlayer);
 	};

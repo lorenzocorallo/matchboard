@@ -20,6 +20,7 @@ const CustomPoints = ({ isCustom, onValue = () => {} }: CustomPointsProps) => {
 	};
 
 	const handleValue = (value: string) => {
+		if (value === "" || isNaN(parseInt(value))) return;
 		setLabel(value);
 		const points = parseInt(value);
 		onValue(points);
