@@ -24,14 +24,13 @@ const sortMatches = (matches: Match[]) => {
 			/* compatibility with game started in previous versions */
 			game: match.game || "burraco",
 			pointsToWin: match.pointsToWin || 2000,
-			isWinMethod: match.isWinMethod || true,
+			isWinMethod: match.isWinMethod !== null || true,
 		}))
 		.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
 };
 
 export const MatchesProvider = (props: React.HTMLAttributes<ProviderProps<IMatchesContext>>) => {
 	const [matches, setMatches] = useState<Match[]>([]);
-
 	const updateSavedMatches = (matches: Match[]) => {
 		localStorage.setItem("matches", JSON.stringify(matches));
 	};
