@@ -24,7 +24,7 @@ const sortMatches = (matches: Match[]) => {
 			/* compatibility with game started in previous versions */
 			game: match.game || "burraco",
 			pointsToWin: match.pointsToWin || 2000,
-			isWinMethod: match.isWinMethod !== null || true,
+			isWinMethod: match.isWinMethod !== null ? match.isWinMethod : true,
 		}))
 		.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
 };
