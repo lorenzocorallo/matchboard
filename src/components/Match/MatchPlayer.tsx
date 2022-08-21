@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IoAdd } from "react-icons/io5";
+import { IoAdd, IoRemove } from "react-icons/io5";
 import Player from "../../types/Player";
 import Button from "../Button";
 import PlayerPoint from "./PlayerPoint";
@@ -13,9 +13,10 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 	const [active, setActive] = useState(false);
+	const [multi, setMulti] = useState<1 | -1>(1);
 
 	const handleOnPoints = (value: string) => {
-		const points = value.toInt();
+		const points = value.toInt() * multi;
 		const newPlayer = {
 			...player,
 			points: [...player.points, points],
@@ -34,7 +35,13 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 
 	return (
 		<>
-			<Prompt active={active} onValue={handleOnPoints} onClose={close} />
+			<Prompt
+				active={active}
+				onValue={handleOnPoints}
+				onClose={close}
+				type="number"
+				label={multi === 1 ? "Inserisci nuovo punteggio (+)" : "Inserisci nuovo punteggio (-)"}
+			/>
 			<div
 				className={`flex flex-col flex-1 h-full ${last ? "" : "border-r-[1px]"} border-slate-400 dark:border-white
 				${player.winner && "bg-green-900 bg-opacity-70 text-white"} ${player.loser && "bg-red-900 bg-opacity-70 text-white"}  `}
@@ -59,8 +66,25 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
 					{player.score}
 				</p>
 
-				<Button theme="success" className="text-2xl py-1 flex justify-center" onClick={open}>
+				<Button
+					theme="success"
+					className="text-2xl py-1 flex justify-center"
+					onClick={() => {
+						open();
+						setMulti(1);
+					}}
+				>
 					<IoAdd size={28} />
+				</Button>
+				<Button
+					theme="error"
+					className="text-2xl py-1 flex justify-center"
+					onClick={() => {
+						open();
+						setMulti(-1);
+					}}
+				>
+					<IoRemove size={28} />
 				</Button>
 			</div>
 		</>

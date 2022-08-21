@@ -44,7 +44,15 @@ const Prompt = ({ value: prevValue, active, onValue, onClose, onDelete, label, t
 			<form onSubmit={handleSubmit}>
 				<p className="text-xl font-bold">{label || (isChange ? "Modifica punteggio" : "Inserisci nuovo punteggio")}</p>
 				<div className="flex justify-center items-center">
-					<TextField autoFocus ref={inputRef} type={type} value={value} onChange={(e) => setValue(e.target.value)} />
+					<TextField
+						pattern={type === "number" ? "[0-9]*" : undefined}
+						inputMode={type === "number" ? "numeric" : undefined}
+						autoFocus
+						ref={inputRef}
+						type={type}
+						value={value}
+						onChange={(e) => setValue(e.target.value)}
+					/>
 					<Button theme="success" type="submit">
 						<IoCheckmark size={24} />
 					</Button>
