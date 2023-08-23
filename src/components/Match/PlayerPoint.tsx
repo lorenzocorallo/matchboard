@@ -14,7 +14,6 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 	const [active, setActive] = useState(false);
 
 	const handleOpenModifyPoints = () => {
-		if (!point) return;
 		setActive(true);
 	};
 
@@ -45,7 +44,7 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 				onDelete={handleDelete}
 			/>
 
-			<button className="w-full py-3 select-none border-b-[1px] border-slate-600 dark:border-white" {...handlers}>
+			<button className="w-full p-2 select-none border-b-[1px] border-slate-600 dark:border-white" {...handlers}>
 				{point}
 			</button>
 		</>

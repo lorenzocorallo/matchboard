@@ -22,7 +22,7 @@ const Button = ({ theme = "default", children, disabled, className = "", ...prop
 	}
 	return (
 		<button
-			className={`m-2 px-4 py-2 rounded-xl transition-all ${
+			className={`p-2 text-sm rounded-md transition-all ${
 				disabled
 					? "bg-gray-300 hover:bg-gray-300 text-gray-400 dark:bg-gray-600 dark:hover:bg-gray-600 dark:text-gray-900"
 					: color

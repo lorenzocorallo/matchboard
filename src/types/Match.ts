@@ -1,15 +1,12 @@
-import { GAMES } from "./../constants";
+import { Game } from "./Game";
 import Player from "./Player";
-
-export type Game = typeof GAMES[number];
 
 export default interface Match {
 	id: string;
+  game: Game;
 	name: string;
 	date: Date;
 	finished: boolean;
-	game: Game;
 	players: Player[];
-	pointsToWin: number;
-	isWinMethod: boolean;
+	chosenPoints: number;
 }

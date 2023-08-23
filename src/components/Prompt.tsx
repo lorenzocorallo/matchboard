@@ -43,7 +43,7 @@ const Prompt = ({ value: prevValue, active, onValue, onClose, onDelete, label, t
 		<Overlay active={active} onClose={onClose}>
 			<form onSubmit={handleSubmit}>
 				<p className="text-xl font-bold">{label || (isChange ? "Modifica punteggio" : "Inserisci nuovo punteggio")}</p>
-				<div className="flex justify-center items-center">
+				<div className="flex justify-center items-center gap-1 my-2">
 					<TextField
 						pattern={type === "number" ? "[0-9]*" : undefined}
 						inputMode={type === "number" ? "numeric" : undefined}

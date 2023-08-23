@@ -14,7 +14,7 @@ const Router = () => {
 						<Route path="match/:id" element={<Match />} />
 						<Route path="new">
 							<Route index element={<GameSelect />} />
-							<Route path=":game" element={<NewMatch />} />
+							<Route path=":gameId" element={<NewMatch />} />
 						</Route>
 					</Route>
 				</Routes>

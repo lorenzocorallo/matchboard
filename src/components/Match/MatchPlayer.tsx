@@ -6,89 +6,100 @@ import PlayerPoint from "./PlayerPoint";
 import Prompt from "../Prompt";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-	player: Player;
-	onPlayerChange: (p: Player) => void;
-	last?: boolean;
+  player: Player;
+  onPlayerChange: (p: Player) => void;
+  last?: boolean;
+  showNegativeAdd: boolean;
 }
 
 const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
-	const [active, setActive] = useState(false);
-	const [multi, setMulti] = useState<1 | -1>(1);
+  const [active, setActive] = useState(false);
+  const [multi, setMulti] = useState<1 | -1>(1);
 
-	const handleOnPoints = (value: string) => {
-		const points = value.toInt() * multi;
-		const newPlayer = {
-			...player,
-			points: [...player.points, points],
-			score: [...player.points, points].reduce((acc, cur) => acc + cur, 0),
-		};
-		onPlayerChange(newPlayer);
-	};
+  const handleOnPoints = (value: string) => {
+    const points = value.toInt() * multi;
+    const newPlayer = {
+      ...player,
+      points: [...player.points, points],
+      score: [...player.points, points].reduce((acc, cur) => acc + cur, 0),
+    };
+    onPlayerChange(newPlayer);
+  };
 
-	const open = () => {
-		setActive(true);
-	};
+  const open = () => {
+    setActive(true);
+  };
 
-	const close = () => {
-		setActive(false);
-	};
+  const close = () => {
+    setActive(false);
+  };
 
-	return (
-		<>
-			<Prompt
-				active={active}
-				onValue={handleOnPoints}
-				onClose={close}
-				type="number"
-				label={multi === 1 ? "Inserisci nuovo punteggio (+)" : "Inserisci nuovo punteggio (-)"}
-			/>
-			<div
-				className={`flex flex-col flex-1 h-full ${last ? "" : "border-r-[1px]"} border-slate-400 dark:border-white
-				${player.winner && "bg-green-900 bg-opacity-70 text-white"} ${player.loser && "bg-red-900 bg-opacity-70 text-white"}  `}
-			>
-				<div className="p-2 border-b-[1px] border-slate-400 dark:border-white">
-					<p>{player.name.toCapitalCase()}</p>
-				</div>
+  return (
+    <>
+      <Prompt
+        active={active}
+        onValue={handleOnPoints}
+        onClose={close}
+        type="number"
+        label={
+          multi === 1
+            ? "Inserisci nuovo punteggio (+)"
+            : "Inserisci nuovo punteggio (-)"
+        }
+      />
+      <div
+        className={`flex flex-col flex-1 h-full ${
+          last ? "" : "border-r-[1px]"
+        } ${player.winner && "bg-green-900 bg-opacity-70 text-white"} ${
+          player.loser && "bg-red-900 bg-opacity-70 text-white"
+        }  `}
+      >
+        <div className="p-2 border-b-[1px]">
+          <p>
+            {player.name.toCapitalCase()}
+          </p>
+        </div>
 
-				<div className="flex-1">
-					{player.points.map((p, i) => (
-						<PlayerPoint
-							key={`p-${p}-${(Math.random() * 100).toFixed(0)}`}
-							player={player}
-							index={i}
-							onPlayerChange={onPlayerChange}
-						/>
-					))}
-				</div>
+        <div className="flex-1">
+          {player.points.map((p, i) => (
+            <PlayerPoint
+              key={`p-${p}-${i}-${(Math.random() * 100).toFixed(0)}`}
+              player={player}
+              index={i}
+              onPlayerChange={onPlayerChange}
+            />
+          ))}
+        </div>
 
-				<p className="py-3 border-y-[1px] border-slate-400 dark:border-white">
-					<span className="opacity-60 pr-2">Tot:</span>
-					{player.score}
-				</p>
+        <div className="p-2 border-y-[1px]">
+          <p><span className="text-gray-400">Tot:</span> {player.score}</p>
+        </div>
 
-				<Button
-					theme="success"
-					className="text-2xl py-1 flex justify-center"
-					onClick={() => {
-						open();
-						setMulti(1);
-					}}
-				>
-					<IoAdd size={28} />
-				</Button>
-				<Button
-					theme="error"
-					className="text-2xl py-1 flex justify-center"
-					onClick={() => {
-						open();
-						setMulti(-1);
-					}}
-				>
-					<IoRemove size={28} />
-				</Button>
-			</div>
-		</>
-	);
+        <div className="p-1 flex flex-col gap-1 items-center">
+          <Button
+            theme="success"
+            className="w-full py-1 flex justify-center"
+            onClick={() => {
+              open();
+              setMulti(1);
+            }}
+          >
+            <IoAdd size={24} />
+          </Button>
+          <Button
+            theme="error"
+            className="w-full py-1 flex justify-center"
+            onClick={() => {
+              open();
+              setMulti(-1);
+            }}
+          >
+            <IoRemove size={24} />
+          </Button>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default MatchPlayer;

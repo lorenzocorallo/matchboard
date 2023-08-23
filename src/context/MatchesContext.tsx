@@ -1,5 +1,8 @@
 import { createContext, ProviderProps, useState } from "react";
 import { useEffect } from "react";
+import Burraco from "../data/games/burraco";
+import Macchiavelli from "../data/games/macchiavelli";
+import Scopa from "../data/games/scopa";
 import Match from "../types/Match";
 
 interface IMatchesContext {
@@ -16,20 +19,28 @@ export const MatchesContext = createContext<IMatchesContext>({
 	deleteMatch: () => {},
 });
 
-const sortMatches = (matches: Match[]) => {
-	return [...matches]
-		.map((match: Match) => ({
-			...match,
-			date: new Date(match.date),
-			/* compatibility with game started in previous versions */
-			game: match.game || "burraco",
-			pointsToWin: match.pointsToWin || 2000,
-			isWinMethod: match.isWinMethod !== null ? match.isWinMethod : true,
-		}))
-		.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
+function retroCompatibilityFix(matches: Match[]): Match[] {
+  matches.forEach(match => {
+    match.date = new Date(match.date);
+    if (typeof match.game === "string") {
+      if (match.game === "burraco") {
+        match.game = Burraco;
+      } else if (match.game === "macchiavelli") {
+        match.game = Macchiavelli;
+      } else if (match.game === "scopa") {
+        match.game = Scopa;
+      }
+    }
+  })
+
+  return matches;
+}
+
+function sortMatches(matches: Match[]): Match[] {
+	return matches.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
 };
 
-export const MatchesProvider = (props: React.HTMLAttributes<ProviderProps<IMatchesContext>>) => {
+export function MatchesProvider (props: React.HTMLAttributes<ProviderProps<IMatchesContext>>) {
 	const [matches, setMatches] = useState<Match[]>([]);
 	const updateSavedMatches = (matches: Match[]) => {
 		localStorage.setItem("matches", JSON.stringify(matches));
@@ -39,26 +50,27 @@ export const MatchesProvider = (props: React.HTMLAttributes<ProviderProps<IMatch
 		const localMatches = localStorage.getItem("matches");
 		if (!localMatches) return [];
 		const parsed: Match[] = JSON.parse(localMatches);
-		const matches = sortMatches(parsed);
+    const fixed: Match[] = retroCompatibilityFix(parsed);
+		const matches: Match[] = sortMatches(fixed);
 		return matches;
 	};
 
 	const addMatch = (match: Match) => {
 		setMatches((m) => {
-			const newMatches = sortMatches([...m, match]);
-			updateSavedMatches(newMatches);
-			return newMatches;
+      m.unshift(match);
+			updateSavedMatches(m);
+			return m;
 		});
 	};
 
 	const updateMatch = (newMatch: Match) => {
-		if (!matches.find((m) => m.id === newMatch.id)) return;
-		const newMatches = matches.map((match) => {
-			if (match.id === newMatch.id) return newMatch;
-			return match;
-		});
-		setMatches(newMatches);
-		updateSavedMatches(newMatches);
+    const index = matches.findIndex((m) => m.id === newMatch.id);
+		if (index === -1) return;
+    setMatches(m => {
+      m[index] = newMatch;
+      updateSavedMatches(m);
+      return m;
+    })
 	};
 
 	const deleteMatch = (id: string) => {
