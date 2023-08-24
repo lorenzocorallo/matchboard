@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoPencil } from "react-icons/io5";
 import { Game } from "../../types/Game";
 import Paper from "../Paper";
@@ -18,20 +18,21 @@ export default function PointsSelect({ game, label, onValue }: Props) {
   const [isWithDelta, setIsWithDelta] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!deltaPoints) return;
-    setPoints(defaultPoints.map(p => isWithDelta ? p + deltaPoints : p));
+    setPoints(defaultPoints.map(p => isWithDelta && deltaPoints ? p + deltaPoints : p));
   }, [isWithDelta, deltaPoints, defaultPoints]);
 
   useEffect(() => {
     const middlePointsIdx = parseInt((points.length / 2).toFixed(0)) - 1;
-    setSelectedPoints(points[middlePointsIdx]);
-  }, [points]);
+    const defaultPoints = points[middlePointsIdx];
+    setSelectedPoints(defaultPoints);
+    onValue(defaultPoints);
+  }, [onValue, points]);
 
-  const handleOnValue = (n: number, custom: boolean = false) => {
+  const handleOnValue = useCallback((n: number, custom: boolean = false) => {
     setIsCustom(custom);
     setSelectedPoints(n);
     onValue(n);
-  };
+  }, [onValue]);
 
   return (
     <Paper>
@@ -48,7 +49,7 @@ export default function PointsSelect({ game, label, onValue }: Props) {
         )}
       </div>
 
-      <div className="flex gap-2 justify-start items-center w-full">
+      <div className="flex gap-3 justify-start items-center w-full">
         {points.map((v) => (
           <Switch
             key={v}

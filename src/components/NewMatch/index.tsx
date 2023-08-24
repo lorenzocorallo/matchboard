@@ -18,7 +18,7 @@ import { Game } from "../../types/Game";
 
 export default function NewMatch() {
   const [name, setName] = useState<string>("Match");
-  const [points, setPoints] = useState<number>(1000);
+  const [points, setPoints] = useState<number>(0);
   const [addPlayerActive, setAddPlayerActive] = useState<boolean>(false);
   const [players, setPlayers] = useState<PlayerType[]>([]);
   const { addMatch } = useContext(MatchesContext);
@@ -83,6 +83,7 @@ export default function NewMatch() {
         </h3>
         <TextField
           label="Nome partita"
+          type="text"
           fullWidth
           value={name}
           placeholder="Match"
