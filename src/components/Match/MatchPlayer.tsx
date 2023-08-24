@@ -4,48 +4,47 @@ import Player from "../../types/Player";
 import Button from "../Button";
 import PlayerPoint from "./PlayerPoint";
 import Prompt from "../Prompt";
+import { Game } from "../../types/Game";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  game: Game;
   player: Player;
   onPlayerChange: (p: Player) => void;
   last?: boolean;
-  showNegativeAdd: boolean;
 }
 
-const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
-  const [active, setActive] = useState(false);
+function MatchPlayer ({ game, player, last = false, onPlayerChange }: Props) {
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
   const [multi, setMulti] = useState<1 | -1>(1);
 
-  const handleOnPoints = (value: string) => {
+  function handleOnPointsStr(value: string): void {
     const points = value.toInt() * multi;
-    const newPlayer = {
-      ...player,
-      points: [...player.points, points],
-      score: [...player.points, points].reduce((acc, cur) => acc + cur, 0),
-    };
-    onPlayerChange(newPlayer);
+    handleOnPoints(points);
+  }
+
+  function handleOnPoints (points: number): void {
+    player.points.push(points);
+    player.score = player.points.reduce((acc, curr) => acc + curr, 0);
+    console.log(player.points);
+    onPlayerChange(player);
   };
 
-  const open = () => {
-    setActive(true);
+  function handleOpenPrompt(): void {
+    setIsPromptOpen(true);
   };
 
-  const close = () => {
-    setActive(false);
-  };
+  const promptLabel = `Inserisci nuovo punteggio ${
+    game.hasNegativePoints ? (multi === 1 ? "(+)" : "(-)") : ""
+  }`;
 
   return (
     <>
       <Prompt
-        active={active}
-        onValue={handleOnPoints}
-        onClose={close}
+        active={isPromptOpen}
+        onValue={handleOnPointsStr}
+        onClose={() => setIsPromptOpen(false)}
         type="number"
-        label={
-          multi === 1
-            ? "Inserisci nuovo punteggio (+)"
-            : "Inserisci nuovo punteggio (-)"
-        }
+        label={promptLabel}
       />
       <div
         className={`flex flex-col flex-1 h-full ${
@@ -55,14 +54,13 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
         }  `}
       >
         <div className="p-2 border-b-[1px]">
-          <p>
-            {player.name.toCapitalCase()}
-          </p>
+          <p>{player.name.toCapitalCase()}</p>
         </div>
 
         <div className="flex-1">
           {player.points.map((p, i) => (
             <PlayerPoint
+              game={game}
               key={`p-${p}-${i}-${(Math.random() * 100).toFixed(0)}`}
               player={player}
               index={i}
@@ -72,7 +70,9 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
         </div>
 
         <div className="p-2 border-y-[1px]">
-          <p><span className="text-gray-400">Tot:</span> {player.score}</p>
+          <p>
+            <span className="text-gray-400">Tot:</span> {player.score}
+          </p>
         </div>
 
         <div className="p-1 flex flex-col gap-1 items-center">
@@ -80,22 +80,28 @@ const MatchPlayer = ({ player, last = false, onPlayerChange }: Props) => {
             theme="success"
             className="w-full py-1 flex justify-center"
             onClick={() => {
-              open();
-              setMulti(1);
+              if (game.addType === "points") {
+                handleOpenPrompt();
+                setMulti(1);
+              } else {
+                handleOnPoints(1);
+              }
             }}
           >
             <IoAdd size={24} />
           </Button>
-          <Button
-            theme="error"
-            className="w-full py-1 flex justify-center"
-            onClick={() => {
-              open();
-              setMulti(-1);
-            }}
-          >
-            <IoRemove size={24} />
-          </Button>
+          {game.hasNegativePoints && (
+            <Button
+              theme="error"
+              className="w-full py-1 flex justify-center"
+              onClick={() => {
+                handleOpenPrompt();
+                setMulti(-1);
+              }}
+            >
+              <IoRemove size={24} />
+            </Button>
+          )}
         </div>
       </div>
     </>

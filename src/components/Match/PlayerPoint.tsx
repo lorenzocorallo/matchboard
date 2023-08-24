@@ -1,20 +1,22 @@
 import { useState } from "react";
 import useLongPress from "../../hooks/useLongPress";
+import { Game } from "../../types/Game";
 import Player from "../../types/Player";
 import Prompt from "../Prompt";
 
 interface Props {
+  game: Game;
 	player: Player;
 	index: number;
 	onPlayerChange: (p: Player) => void;
 }
 
-const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
+const PlayerPoint = ({ game, player, index, onPlayerChange }: Props) => {
 	const [point] = useState<number>(player.points[index]);
-	const [active, setActive] = useState(false);
+	const [isPromptOpen, setIsPromptOpen] = useState(false);
 
 	const handleOpenModifyPoints = () => {
-		setActive(true);
+		setIsPromptOpen(true);
 	};
 
 	const handleOnValue = (value: string) => {
@@ -38,10 +40,13 @@ const PlayerPoint = ({ player, index, onPlayerChange }: Props) => {
 			<Prompt
 				value={point.toString()}
 				type="number"
-				active={active}
+				active={isPromptOpen}
 				onValue={handleOnValue}
-				onClose={() => setActive(false)}
+				onClose={() => setIsPromptOpen(false)}
 				onDelete={handleDelete}
+        label={game.addType === "wins" ? "Elimina punteggio" : "Modifica punteggio"}
+        showInput={game.addType === "points"}
+        showPrevValue={game.addType === "points"}
 			/>
 
 			<button className="w-full p-2 select-none border-b-[1px] border-slate-600 dark:border-white" {...handlers}>

@@ -162,11 +162,11 @@ const Match = () => {
           <div className="flex w-full border-[1px] flex-1 rounded-md overflow-hidden [&_*]:border-slate-400 border-slate-400 [&_*]:dark:border-slate-200/40 dark:border-slate-200/40">
             {match.players.map((p, i) => (
               <MatchPlayer
+                game={match.game}
                 player={p}
                 last={match.players.length - 1 === i}
                 key={p.name}
                 onPlayerChange={handlePlayerChange}
-                showNegativeAdd={match.game.hasNegativePoints}
               />
             ))}
           </div>
