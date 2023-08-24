@@ -25,7 +25,6 @@ function MatchPlayer ({ game, player, last = false, onPlayerChange }: Props) {
   function handleOnPoints (points: number): void {
     player.points.push(points);
     player.score = player.points.reduce((acc, curr) => acc + curr, 0);
-    console.log(player.points);
     onPlayerChange(player);
   };
 
