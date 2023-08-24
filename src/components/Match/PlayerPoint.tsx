@@ -11,15 +11,15 @@ interface Props {
 	onPlayerChange: (p: Player) => void;
 }
 
-const PlayerPoint = ({ game, player, index, onPlayerChange }: Props) => {
+function PlayerPoint({ game, player, index, onPlayerChange }: Props) {
 	const [point] = useState<number>(player.points[index]);
 	const [isPromptOpen, setIsPromptOpen] = useState(false);
 
-	const handleOpenModifyPoints = () => {
+	function handleOpenPrompt(): void {
 		setIsPromptOpen(true);
 	};
 
-	const handleOnValue = (value: string) => {
+	function handleOnValue(value: string): void {
 		const newPlayer = { ...player };
 		const points = value.toInt();
 		newPlayer.points[index] = points;
@@ -27,14 +27,14 @@ const PlayerPoint = ({ game, player, index, onPlayerChange }: Props) => {
 		onPlayerChange(newPlayer);
 	};
 
-	const handleDelete = () => {
+	function handleDelete(): void {
 		const newPlayer = { ...player };
 		newPlayer.points.splice(index, 1);
 		newPlayer.score = newPlayer.points.reduce((acc, cur) => acc + cur, 0);
 		onPlayerChange(newPlayer);
 	};
 
-	const { handlers } = useLongPress(handleOpenModifyPoints);
+	const { handlers } = useLongPress(handleOpenPrompt);
 	return (
 		<>
 			<Prompt

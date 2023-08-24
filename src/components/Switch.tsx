@@ -7,7 +7,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 	active: boolean;
 }
 
-const Switch = ({ activeLabel, inactiveLabel, active, onClick, className, ...props }: Props) => {
+function Switch({ activeLabel, inactiveLabel, active, onClick, className, ...props }: Props) {
 	return (
 		<Button onClick={onClick} theme={active ? "success" : "default"} className={`py-1 ${className || ""}`} {...props}>
 			{active ? activeLabel || "ON" : inactiveLabel || "OFF"}

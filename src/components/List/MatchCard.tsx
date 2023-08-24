@@ -6,7 +6,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	match: Match;
 }
 
-const MatchCard = ({ match: m }: Props) => {
+function MatchCard({ match: m }: Props) {
 	return (
 		<Link to={`/match/${m.id}`}>
 			<Paper className="w-full cursor-pointer text-left">

@@ -32,7 +32,8 @@ function Prompt({
   const [value, setValue] = useState<string>("");
   const [isChange, setIsChange] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     onValue(value);
     onClose();

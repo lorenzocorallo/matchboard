@@ -5,7 +5,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	onClose: () => void;
 }
 
-const Overlay = ({ active, children, onClose, className, ...props }: Props) => {
+function Overlay({ active, children, onClose, className, ...props }: Props) {
 	return (
 		<div
 			className={`absolute top-0 left-0 pt-[25%] backdrop-blur-lg backdrop-brightness-50 h-full w-full transition-all text-white ${

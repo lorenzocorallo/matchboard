@@ -73,17 +73,18 @@ interface CustomPointsProps {
   onValue: (n: number) => void;
 }
 function CustomPoints ({ isCustom, onValue }: CustomPointsProps) {
-  const [active, setActive] = useState<boolean>(false);
   const [label, setLabel] = useState<string>("");
+  const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
 
-  const open = () => {
-    setActive(true);
-  };
-  const close = () => {
-    setActive(false);
+  function handleClosePrompt(): void {
+    setIsPromptOpen(false);
   };
 
-  const handleValue = (value: string) => {
+  function handleOpenPrompt(): void {
+    setIsPromptOpen(true);
+  };
+
+  function handleValue(value: string): void {
     if (value === "" || isNaN(parseInt(value))) return;
     setLabel(value);
     const points = parseInt(value);
@@ -94,7 +95,7 @@ function CustomPoints ({ isCustom, onValue }: CustomPointsProps) {
     <>
       <Switch
         active={isCustom}
-        onClick={open}
+        onClick={handleOpenPrompt}
         activeLabel={
           <div className="flex items-center gap-2">
             {label} <IoPencil />
@@ -108,10 +109,10 @@ function CustomPoints ({ isCustom, onValue }: CustomPointsProps) {
       />
       <Prompt
         label="Punteggio personalizzato"
-        active={active}
+        active={isPromptOpen}
         type="number"
         onValue={handleValue}
-        onClose={close}
+        onClose={handleClosePrompt}
       />
     </>
   );

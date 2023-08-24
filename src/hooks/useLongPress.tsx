@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-const useLongPress = (callback: () => void, ms: number = 500) => {
+function useLongPress(callback: () => void, ms: number = 500) {
 	const [timer, setTimer] = useState<any>();
 	const [timerExists, setTimerExists] = useState(false);
 
-	const startPressTime = () => {
+	function startPressTime(): void {
 		if (timerExists) return;
 
 		setTimer(
@@ -14,7 +14,7 @@ const useLongPress = (callback: () => void, ms: number = 500) => {
 		);
 	};
 
-	const cancelPress = () => {
+	function cancelPress(): void {
 		clearTimeout(timer);
 		setTimerExists(false);
 	};

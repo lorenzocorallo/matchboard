@@ -4,7 +4,7 @@ import Header from "../Header";
 import Paper from "../Paper";
 import Wrapper from "../Wrapper";
 
-export default function GameSelect () {
+export default function GameSelect() {
   return (
     <Wrapper>
       <Header backPath="/" title="Scegli gioco" />

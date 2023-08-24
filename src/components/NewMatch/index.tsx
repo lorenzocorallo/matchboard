@@ -33,7 +33,7 @@ export default function NewMatch() {
     setGame(game);
   }, [gameId, navigate]);
 
-  const handleCreate = () => {
+  function handleCreate(): void {
     if (players.length < 2 || !game) return;
     const newMatch: Match = {
       id: uuidv4(),
@@ -48,22 +48,22 @@ export default function NewMatch() {
     navigate(`/match/${newMatch.id}`);
   };
 
-  const handleCreatePlayer = (name: string) => {
+  function handleCreatePlayer(name: string): void {
     setAddPlayerActive(false);
     const newPlayers = [...players, createPlayer({ name })];
     setPlayers(newPlayers);
   };
 
-  const handleDeletePlayer = (id: string) => {
+  function handleDeletePlayer(id: string): void {
     setPlayers((p) => [...p].filter((p) => p.id !== id));
   };
 
-  const handleSetPoints = (n: number) => {
+  function handleSetPoints(n: number): void {
     if (n <= 0) return;
     setPoints(n);
   };
 
-  const handleDefaultPlayers = () => {
+  function handleDefaultPlayers(): void {
     setPlayers([createPlayer({ name: "Noi" }), createPlayer({ name: "Voi" })]);
   };
 
@@ -141,16 +141,17 @@ interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
   index: number;
 }
 function Player({ player, index, onDelete }: PlayerProps) {
-  const [active, setActive] = useState<boolean>(false);
-  const close = () => {
-    setActive(false);
+  const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
+
+  function handleClosePrompt(): void {
+    setIsPromptOpen(false);
   };
 
-  const open = () => {
-    setActive(true);
+  function handleOpenPrompt(): void {
+    setIsPromptOpen(true);
   };
 
-  const handleModifyPlayer = (name: string) => {
+  function handleModifyPlayer(name: string): void {
     if (name.length === 0) return;
     player.name = name;
   };
@@ -158,15 +159,15 @@ function Player({ player, index, onDelete }: PlayerProps) {
   return (
     <>
       <Prompt
-        active={active}
-        onClose={close}
+        active={isPromptOpen}
+        onClose={handleClosePrompt}
         value={player.name}
         onValue={handleModifyPlayer}
         label="Modifica nome"
       />
       <div
         className="w-full border rounded-md flex items-center gap-1 border-slate-400 dark:border-slate-200/40 p-1 cursor-pointer"
-        onClick={open}
+        onClick={handleOpenPrompt}
       >
         <span className="text-gray-500 dark:text-gray-400">G{index}</span>
         <IoArrowForward

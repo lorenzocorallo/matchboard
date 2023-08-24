@@ -6,7 +6,7 @@ import Header from "../Header";
 import Wrapper from "../Wrapper";
 import MatchCard from "./MatchCard";
 
-const Matches = () => {
+function Matches() {
 	const { matches } = useContext(MatchesContext);
 	return matches.length > 0 ? (
 		<div className="p-4 gap-4 w-full flex flex-col flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-gray-300 scrollbar-thumb-gray-400 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -21,7 +21,7 @@ const Matches = () => {
 	);
 };
 
-const List = () => {
+function List() {
 	return (
 		<Wrapper>
 			<Header title="Lista partite" />

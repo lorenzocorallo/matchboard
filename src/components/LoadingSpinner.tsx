@@ -3,7 +3,7 @@ import React from "react";
 interface Props extends React.SVGAttributes<SVGSVGElement> {
 	size?: number;
 }
-const LoadingSpinner = ({ width, height, size = 10, className = "", ...props }: Props) => {
+function LoadingSpinner({ width, height, size = 10, className = "", ...props }: Props) {
 	return (
 		<svg
 			className={`${className} animate-spin dark:text-white text-black`}

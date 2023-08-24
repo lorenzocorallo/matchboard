@@ -6,7 +6,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	backPath?: string;
 }
 
-const Header = ({ backPath }: Props) => {
+function Header({ backPath }: Props) {
 	const navigate = useNavigate();
 
 	return (

@@ -40,22 +40,23 @@ function sortMatches(matches: Match[]): Match[] {
 	return matches.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
 };
 
+function updateSavedMatches(matches: Match[]): void {
+  localStorage.setItem("matches", JSON.stringify(matches));
+};
+
+function getSavedMatches(): Match[] {
+  const localMatches = localStorage.getItem("matches");
+  if (!localMatches) return [];
+  const parsed: Match[] = JSON.parse(localMatches);
+  const fixed: Match[] = retroCompatibilityFix(parsed);
+  const matches: Match[] = sortMatches(fixed);
+  return matches;
+};
+
 export function MatchesProvider (props: React.HTMLAttributes<ProviderProps<IMatchesContext>>) {
 	const [matches, setMatches] = useState<Match[]>([]);
-	const updateSavedMatches = (matches: Match[]) => {
-		localStorage.setItem("matches", JSON.stringify(matches));
-	};
 
-	const getSavedMatches = () => {
-		const localMatches = localStorage.getItem("matches");
-		if (!localMatches) return [];
-		const parsed: Match[] = JSON.parse(localMatches);
-    const fixed: Match[] = retroCompatibilityFix(parsed);
-		const matches: Match[] = sortMatches(fixed);
-		return matches;
-	};
-
-	const addMatch = (match: Match) => {
+	function addMatch(match: Match): void {
 		setMatches((m) => {
       m.unshift(match);
 			updateSavedMatches(m);
@@ -63,7 +64,7 @@ export function MatchesProvider (props: React.HTMLAttributes<ProviderProps<IMatc
 		});
 	};
 
-	const updateMatch = (newMatch: Match) => {
+	function updateMatch(newMatch: Match): void {
     const index = matches.findIndex((m) => m.id === newMatch.id);
 		if (index === -1) return;
     setMatches(m => {
@@ -73,7 +74,7 @@ export function MatchesProvider (props: React.HTMLAttributes<ProviderProps<IMatc
     })
 	};
 
-	const deleteMatch = (id: string) => {
+	function deleteMatch(id: string): void {
 		const newMatches = matches.filter((m) => m.id !== id);
 		setMatches(newMatches);
 		updateSavedMatches(newMatches);

@@ -11,14 +11,14 @@ import MatchPlayer from "./MatchPlayer";
 import LoadingSpinner from "../LoadingSpinner";
 import { IoReload, IoTrash } from "react-icons/io5";
 
-const Match = () => {
+function Match() {
   const { matches, updateMatch, deleteMatch, addMatch } =
     useContext(MatchesContext);
   const { id } = useParams();
   const [match, setMatch] = useState<IMatch | null>();
   const navigate = useNavigate();
 
-  const handlePlayerChange = (p: Player) => {
+  function handlePlayerChange(p: Player): void {
     if (!match) return;
     //update match player with p
     const newPlayers = match.players.map((player) => {
@@ -79,7 +79,7 @@ const Match = () => {
     updateMatch(newMatch);
   };
 
-  const handleDelete = () => {
+  function handleDelete(): void {
     const confirm = window.confirm(
       `Sei sicuro di voler cancellare questa partita? (quest'azione non si può regredire)`,
     );
@@ -88,7 +88,7 @@ const Match = () => {
     navigate("/");
   };
 
-  const handleRematch = () => {
+  function handleRematch(): void {
     if (!match) return;
     const newMatch: IMatch = {
       ...match,

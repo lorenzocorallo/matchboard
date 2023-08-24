@@ -4,7 +4,7 @@ import Match from "./Match";
 import NewMatch from "./NewMatch";
 import GameSelect from "./NewMatch/GameSelect";
 
-const Router = () => {
+function Router() {
 	return (
 		<BrowserRouter>
 			<div className="w-screen h-screen dark:text-white dark:bg-slate-900 overflow-x-hidden">

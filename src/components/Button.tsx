@@ -2,7 +2,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	theme?: "success" | "error" | "default" | "blue";
 }
 
-const Button = ({ theme = "default", children, disabled, className = "", ...props }: Props) => {
+function Button({ theme = "default", children, disabled, className = "", ...props }: Props) {
 	let color;
 	switch (theme) {
 		case "blue":
@@ -22,7 +22,7 @@ const Button = ({ theme = "default", children, disabled, className = "", ...prop
 	}
 	return (
 		<button
-			className={`p-2 text-sm rounded-md transition-all ${
+			className={`p-2 py-1 text-sm rounded-md transition-all ${
 				disabled
 					? "bg-gray-300 hover:bg-gray-300 text-gray-400 dark:bg-gray-600 dark:hover:bg-gray-600 dark:text-gray-900"
 					: color
