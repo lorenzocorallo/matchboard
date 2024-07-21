@@ -1,4 +1,4 @@
 interface String {
-	toCapitalCase(): string;
-	toInt(): number;
+  toCapitalCase(): string;
+  toInt(): number;
 }

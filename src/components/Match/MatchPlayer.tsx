@@ -13,7 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   last?: boolean;
 }
 
-function MatchPlayer ({ game, player, last = false, onPlayerChange }: Props) {
+function MatchPlayer({ game, player, last = false, onPlayerChange }: Props) {
   const [isPromptOpen, setIsPromptOpen] = useState(false);
   const [multi, setMulti] = useState<1 | -1>(1);
 
@@ -22,15 +22,15 @@ function MatchPlayer ({ game, player, last = false, onPlayerChange }: Props) {
     handleOnPoints(points);
   }
 
-  function handleOnPoints (points: number): void {
+  function handleOnPoints(points: number): void {
     player.points.push(points);
     player.score = player.points.reduce((acc, curr) => acc + curr, 0);
     onPlayerChange(player);
-  };
+  }
 
   function handleOpenPrompt(): void {
     setIsPromptOpen(true);
-  };
+  }
 
   const promptLabel = `Inserisci nuovo punteggio ${
     game.hasNegativePoints ? (multi === 1 ? "(+)" : "(-)") : ""
@@ -105,6 +105,6 @@ function MatchPlayer ({ game, player, last = false, onPlayerChange }: Props) {
       </div>
     </>
   );
-};
+}
 
 export default MatchPlayer;

@@ -29,8 +29,8 @@ function Prompt({
   showInput = true,
   showPrevValue = true,
 }: Props) {
-  const [value, setValue] = useState<string>("");
-  const [isChange, setIsChange] = useState<boolean>(false);
+  const hasPrevValue = prevValue !== undefined && prevValue.length > 0;
+  const [value, setValue] = useState<string>(hasPrevValue ? prevValue : "");
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
@@ -51,18 +51,12 @@ function Prompt({
     else inputRef.current.blur();
   }, [inputRef, active]);
 
-  useEffect(() => {
-    if (!prevValue || prevValue.length === 0) return;
-    setIsChange(true);
-    setValue(prevValue);
-  }, [prevValue]);
-
   return (
     <Overlay active={active} onClose={handleAbort}>
       <form onSubmit={handleSubmit}>
         <p className="text-xl font-bold">
           {label ||
-            (isChange ? "Modifica punteggio" : "Inserisci nuovo punteggio")}
+            (hasPrevValue ? "Modifica punteggio" : "Inserisci nuovo punteggio")}
         </p>
         {showInput && (
           <div className="flex justify-center items-center gap-1 my-2">
@@ -80,7 +74,7 @@ function Prompt({
             </Button>
           </div>
         )}
-        {isChange && (
+        {hasPrevValue && (
           <>
             {showPrevValue && 
               <p className="text-gray-600 dark:text-gray-400 pointer-events-none select-none">

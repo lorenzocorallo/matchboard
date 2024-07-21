@@ -4,6 +4,11 @@ import Burraco from "./burraco";
 import Macchiavelli from "./macchiavelli";
 import Scopa from "./scopa";
 
-const GAMES: readonly Game[] = [Burraco, Macchiavelli, Scopa, Briscola] as const;
+const GAMES: readonly Game[] = [
+  Burraco,
+  Macchiavelli,
+  Scopa,
+  Briscola,
+] as const;
 
 export default GAMES;

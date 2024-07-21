@@ -18,7 +18,11 @@ export default function PointsSelect({ game, label, onValue }: Props) {
   const [isWithDelta, setIsWithDelta] = useState<boolean>(false);
 
   useEffect(() => {
-    setPoints(defaultPoints.map(p => isWithDelta && deltaPoints ? p + deltaPoints : p));
+    setPoints(
+      defaultPoints.map((p) =>
+        isWithDelta && deltaPoints ? p + deltaPoints : p,
+      ),
+    );
   }, [isWithDelta, deltaPoints, defaultPoints]);
 
   useEffect(() => {
@@ -28,11 +32,14 @@ export default function PointsSelect({ game, label, onValue }: Props) {
     onValue(defaultPoints);
   }, [onValue, points]);
 
-  const handleOnValue = useCallback((n: number, custom: boolean = false) => {
-    setIsCustom(custom);
-    setSelectedPoints(n);
-    onValue(n);
-  }, [onValue]);
+  const handleOnValue = useCallback(
+    (n: number, custom: boolean = false) => {
+      setIsCustom(custom);
+      setSelectedPoints(n);
+      onValue(n);
+    },
+    [onValue],
+  );
 
   return (
     <Paper>
@@ -42,10 +49,13 @@ export default function PointsSelect({ game, label, onValue }: Props) {
             (game.mode === "win" ? "Punti per vincere" : "Punti per perdere")}
         </p>
         {deltaPoints && (
-        <div className="flex items-center gap-2">
-          +5
-          <Switch active={isWithDelta} onClick={() => setIsWithDelta((v) => !v)} />
-        </div>
+          <div className="flex items-center gap-2">
+            +5
+            <Switch
+              active={isWithDelta}
+              onClick={() => setIsWithDelta((v) => !v)}
+            />
+          </div>
         )}
       </div>
 
@@ -72,24 +82,24 @@ interface CustomPointsProps {
   isCustom: boolean;
   onValue: (n: number) => void;
 }
-function CustomPoints ({ isCustom, onValue }: CustomPointsProps) {
+function CustomPoints({ isCustom, onValue }: CustomPointsProps) {
   const [label, setLabel] = useState<string>("");
   const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
 
   function handleClosePrompt(): void {
     setIsPromptOpen(false);
-  };
+  }
 
   function handleOpenPrompt(): void {
     setIsPromptOpen(true);
-  };
+  }
 
   function handleValue(value: string): void {
     if (value === "" || isNaN(parseInt(value))) return;
     setLabel(value);
     const points = parseInt(value);
     onValue(points);
-  };
+  }
 
   return (
     <>
@@ -116,5 +126,4 @@ function CustomPoints ({ isCustom, onValue }: CustomPointsProps) {
       />
     </>
   );
-};
-
+}

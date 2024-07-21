@@ -6,4 +6,4 @@ export type Game = {
   readonly deltaPoints?: number;
   readonly mode: "lose" | "win";
   readonly addType: "points" | "wins";
-}
+};

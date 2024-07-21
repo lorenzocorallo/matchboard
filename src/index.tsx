@@ -7,9 +7,9 @@ import "./utils/native";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-	<React.StrictMode>
-		<MatchesProvider>
-			<Router />
-		</MatchesProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <MatchesProvider>
+      <Router />
+    </MatchesProvider>
+  </React.StrictMode>,
 );

@@ -77,7 +77,7 @@ function Match() {
     const newMatch = { ...match, players: newPlayers, finished };
     setMatch(newMatch);
     updateMatch(newMatch);
-  };
+  }
 
   function handleDelete(): void {
     const confirm = window.confirm(
@@ -86,7 +86,7 @@ function Match() {
     if (!confirm || !id) return;
     deleteMatch(id);
     navigate("/");
-  };
+  }
 
   function handleRematch(): void {
     if (!match) return;
@@ -105,7 +105,7 @@ function Match() {
     };
     addMatch(newMatch);
     navigate(`/match/${newMatch.id}`);
-  };
+  }
 
   useEffect(() => {
     const match = matches.find((m) => m.id === id);
@@ -123,8 +123,8 @@ function Match() {
           <div>
             <p className="flex">
               <span className="flex-1 text-left">
-                {match ? `${match.name.trimEnd()} ` : "Partita in caricamento "}(
-                {match.game.name}){" "}
+                {match ? `${match.name.trimEnd()} ` : "Partita in caricamento "}
+                ({match.game.name}){" "}
               </span>
               {match.date.toLocaleDateString()}
             </p>
@@ -150,7 +150,7 @@ function Match() {
               <div className="flex gap-2 items-center justify-center">
                 {match.finished && (
                   <Button theme="success" onClick={handleRematch}>
-                  <IoReload size={18} />
+                    <IoReload size={18} />
                   </Button>
                 )}
                 <Button theme="error" onClick={handleDelete}>
@@ -178,6 +178,6 @@ function Match() {
       )}
     </Wrapper>
   );
-};
+}
 
 export default Match;

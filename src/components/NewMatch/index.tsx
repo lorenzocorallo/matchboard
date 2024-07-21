@@ -46,26 +46,26 @@ export default function NewMatch() {
     };
     addMatch(newMatch);
     navigate(`/match/${newMatch.id}`);
-  };
+  }
 
   function handleCreatePlayer(name: string): void {
     setAddPlayerActive(false);
     const newPlayers = [...players, createPlayer({ name })];
     setPlayers(newPlayers);
-  };
+  }
 
   function handleDeletePlayer(id: string): void {
     setPlayers((p) => [...p].filter((p) => p.id !== id));
-  };
+  }
 
   function handleSetPoints(n: number): void {
     if (n <= 0) return;
     setPoints(n);
-  };
+  }
 
   function handleDefaultPlayers(): void {
     setPlayers([createPlayer({ name: "Noi" }), createPlayer({ name: "Voi" })]);
-  };
+  }
 
   return game ? (
     <Wrapper>
@@ -145,16 +145,16 @@ function Player({ player, index, onDelete }: PlayerProps) {
 
   function handleClosePrompt(): void {
     setIsPromptOpen(false);
-  };
+  }
 
   function handleOpenPrompt(): void {
     setIsPromptOpen(true);
-  };
+  }
 
   function handleModifyPlayer(name: string): void {
     if (name.length === 0) return;
     player.name = name;
-  };
+  }
 
   return (
     <>

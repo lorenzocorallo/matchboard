@@ -6,21 +6,21 @@ import Scopa from "../data/games/scopa";
 import Match from "../types/Match";
 
 interface IMatchesContext {
-	matches: Match[];
-	addMatch: (match: Match) => void;
-	updateMatch: (newMatch: Match) => void;
-	deleteMatch: (id: string) => void;
+  matches: Match[];
+  addMatch: (match: Match) => void;
+  updateMatch: (newMatch: Match) => void;
+  deleteMatch: (id: string) => void;
 }
 
 export const MatchesContext = createContext<IMatchesContext>({
-	matches: [],
-	addMatch: () => {},
-	updateMatch: () => {},
-	deleteMatch: () => {},
+  matches: [],
+  addMatch: () => {},
+  updateMatch: () => {},
+  deleteMatch: () => {},
 });
 
 function retroCompatibilityFix(matches: Match[]): Match[] {
-  matches.forEach(match => {
+  matches.forEach((match) => {
     match.date = new Date(match.date);
     if (typeof match.game === "string") {
       if (match.game === "burraco") {
@@ -31,18 +31,20 @@ function retroCompatibilityFix(matches: Match[]): Match[] {
         match.game = Scopa;
       }
     }
-  })
+  });
 
   return matches;
 }
 
 function sortMatches(matches: Match[]): Match[] {
-	return matches.sort((a: Match, b: Match) => b.date.getTime() - a.date.getTime());
-};
+  return matches.sort(
+    (a: Match, b: Match) => b.date.getTime() - a.date.getTime(),
+  );
+}
 
 function updateSavedMatches(matches: Match[]): void {
   localStorage.setItem("matches", JSON.stringify(matches));
-};
+}
 
 function getSavedMatches(): Match[] {
   const localMatches = localStorage.getItem("matches");
@@ -51,39 +53,46 @@ function getSavedMatches(): Match[] {
   const fixed: Match[] = retroCompatibilityFix(parsed);
   const matches: Match[] = sortMatches(fixed);
   return matches;
-};
+}
 
-export function MatchesProvider (props: React.HTMLAttributes<ProviderProps<IMatchesContext>>) {
-	const [matches, setMatches] = useState<Match[]>([]);
+export function MatchesProvider(
+  props: React.HTMLAttributes<ProviderProps<IMatchesContext>>,
+) {
+  const [matches, setMatches] = useState<Match[]>([]);
 
-	function addMatch(match: Match): void {
-		setMatches((m) => {
+  function addMatch(match: Match): void {
+    setMatches((m) => {
       m.unshift(match);
-			updateSavedMatches(m);
-			return m;
-		});
-	};
+      updateSavedMatches(m);
+      return m;
+    });
+  }
 
-	function updateMatch(newMatch: Match): void {
+  function updateMatch(newMatch: Match): void {
     const index = matches.findIndex((m) => m.id === newMatch.id);
-		if (index === -1) return;
-    setMatches(m => {
+    if (index === -1) return;
+    setMatches((m) => {
       m[index] = newMatch;
       updateSavedMatches(m);
       return m;
-    })
-	};
+    });
+  }
 
-	function deleteMatch(id: string): void {
-		const newMatches = matches.filter((m) => m.id !== id);
-		setMatches(newMatches);
-		updateSavedMatches(newMatches);
-	};
+  function deleteMatch(id: string): void {
+    const newMatches = matches.filter((m) => m.id !== id);
+    setMatches(newMatches);
+    updateSavedMatches(newMatches);
+  }
 
-	useEffect(() => {
-		const local = getSavedMatches();
-		setMatches(local);
-	}, []);
+  useEffect(() => {
+    const local = getSavedMatches();
+    setMatches(local);
+  }, []);
 
-	return <MatchesContext.Provider value={{ matches, addMatch, updateMatch, deleteMatch }} {...props} />;
-};
+  return (
+    <MatchesContext.Provider
+      value={{ matches, addMatch, updateMatch, deleteMatch }}
+      {...props}
+    />
+  );
+}
