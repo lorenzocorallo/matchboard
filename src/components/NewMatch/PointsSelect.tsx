@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { IoPencil } from "react-icons/io5";
 import { Game } from "../../types/Game";
 import Paper from "../Paper";
@@ -12,25 +12,20 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 export default function PointsSelect({ game, label, onValue }: Props) {
   const { defaultPoints, deltaPoints } = game;
-  const [points, setPoints] = useState<number[]>([]);
-  const [selectedPoints, setSelectedPoints] = useState<number>(0);
   const [isCustom, setIsCustom] = useState<boolean>(false);
   const [isWithDelta, setIsWithDelta] = useState<boolean>(false);
 
-  useEffect(() => {
-    setPoints(
+  const points = useMemo(
+    () =>
       defaultPoints.map((p) =>
         isWithDelta && deltaPoints ? p + deltaPoints : p,
       ),
-    );
-  }, [isWithDelta, deltaPoints, defaultPoints]);
+    [defaultPoints, isWithDelta, deltaPoints],
+  );
 
-  useEffect(() => {
-    const middlePointsIdx = parseInt((points.length / 2).toFixed(0)) - 1;
-    const defaultPoints = points[middlePointsIdx];
-    setSelectedPoints(defaultPoints);
-    onValue(defaultPoints);
-  }, [onValue, points]);
+  const defaultSelectedPoints = points[parseInt((points.length / 2).toFixed(0)) - 1];
+
+  const [selectedPoints, setSelectedPoints] = useState<number>(defaultSelectedPoints);
 
   const handleOnValue = useCallback(
     (n: number, custom: boolean = false) => {
