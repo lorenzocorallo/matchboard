@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { IoAdd, IoRemove } from "react-icons/io5";
-import Player from "../../types/Player";
-import Button from "../Button";
+import Player from "@/types/Player";
+import { Game } from "@/types/Game";
+import Button from "@/components/Button";
+import Prompt from "@/components/Prompt";
 import PlayerPoint from "./PlayerPoint";
-import Prompt from "../Prompt";
-import { Game } from "../../types/Game";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   game: Game;

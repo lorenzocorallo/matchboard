@@ -23,7 +23,13 @@
     "forceConsistentCasingInFileNames": true,
 
 		"outDir": "dist",
-		"esModuleInterop": true
-	},
+		"esModuleInterop": true,
+    
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
   "include": ["src", "vite.config.ts"]
 }

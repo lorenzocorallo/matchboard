@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import { MatchesContext } from "../../context/MatchesContext";
-import Player from "../../types/Player";
-import IMatch from "../../types/Match";
-import Button from "../Button";
-import Header from "../Header";
-import Wrapper from "../Wrapper";
-import MatchPlayer from "./MatchPlayer";
-import LoadingSpinner from "../LoadingSpinner";
 import { IoReload, IoTrash } from "react-icons/io5";
+import { v4 as uuidv4 } from "uuid";
+import { MatchesContext } from "@/context/MatchesContext";
+import Player from "@/types/Player";
+import IMatch from "@/types/Match";
+import Button from "@/components/Button";
+import Header from "@/components/Header";
+import Wrapper from "@/components/Wrapper";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import MatchPlayer from "./MatchPlayer";
 
 function Match() {
   const { matches, updateMatch, deleteMatch, addMatch } =

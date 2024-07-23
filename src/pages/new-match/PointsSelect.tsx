@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
 import { IoPencil } from "react-icons/io5";
-import { Game } from "../../types/Game";
-import Paper from "../Paper";
-import Prompt from "../Prompt";
-import Switch from "../Switch";
+import { Game } from "@/types/Game";
+import Paper from "@/components/Paper";
+import Prompt from "@/components/Prompt";
+import Switch from "@/components/Switch";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   game: Game;
