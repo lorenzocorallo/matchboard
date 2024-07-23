@@ -1,4 +1,4 @@
-import { Game } from "../../types/Game";
+import { Game } from "@/types/game";
 import Briscola from "./briscola";
 import Burraco from "./burraco";
 import Macchiavelli from "./macchiavelli";

@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "./button";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   activeLabel?: string | JSX.Element;

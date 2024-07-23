@@ -1,9 +1,9 @@
 import { createContext, ProviderProps, useState } from "react";
 import { useEffect } from "react";
-import Burraco from "../data/games/burraco";
-import Macchiavelli from "../data/games/macchiavelli";
-import Scopa from "../data/games/scopa";
-import Match from "../types/Match";
+import Burraco from "@/data/games/burraco";
+import Macchiavelli from "@/data/games/macchiavelli";
+import Scopa from "@/data/games/scopa";
+import Match from "@/types/match";
 
 interface IMatchesContext {
   matches: Match[];

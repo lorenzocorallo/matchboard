@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { MatchesContext } from "../../context/MatchesContext";
-import Button from "../Button";
-import Header from "../Header";
-import Wrapper from "../Wrapper";
-import MatchCard from "./MatchCard";
+import { MatchesContext } from "@/context/matches";
+import Button from "@/components/button";
+import Header from "@/components/header";
+import Wrapper from "@/components/wrapper";
+import MatchCard from "./match-card";
 
 function Matches() {
   const { matches } = useContext(MatchesContext);
@@ -23,7 +23,7 @@ function Matches() {
   );
 }
 
-function List() {
+function Homepage() {
   return (
     <Wrapper>
       <Header title="Lista partite" />
@@ -39,4 +39,4 @@ function List() {
   );
 }
 
-export default List;
+export default Homepage;

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Router from "./components/Router";
-import { MatchesProvider } from "./context/MatchesContext";
+import Router from "./router";
+import { MatchesProvider } from "./context/matches";
 import "./index.css";
 import "./utils/native";
 
