@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import Player from "@/types/Player";
+import Player from "@/types/player";
 
 interface CreatePlayerProps extends Partial<Player> {
   name: string;

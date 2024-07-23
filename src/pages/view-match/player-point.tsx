@@ -1,8 +1,8 @@
 import { useState } from "react";
-import useLongPress from "@/hooks/useLongPress";
-import { Game } from "@/types/Game";
-import Player from "@/types/Player";
-import Prompt from "@/components/Prompt";
+import useLongPress from "@/hooks/use-long-press";
+import { Game } from "@/types/game";
+import Player from "@/types/player";
+import Prompt from "@/components/prompt";
 
 interface Props {
   game: Game;

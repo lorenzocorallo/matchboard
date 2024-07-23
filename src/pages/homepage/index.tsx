@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { MatchesContext } from "@/context/MatchesContext";
-import Button from "@/components/Button";
-import Header from "@/components/Header";
-import Wrapper from "@/components/Wrapper";
-import MatchCard from "./MatchCard";
+import { MatchesContext } from "@/context/matches";
+import Button from "@/components/button";
+import Header from "@/components/header";
+import Wrapper from "@/components/wrapper";
+import MatchCard from "./match-card";
 
 function Matches() {
   const { matches } = useContext(MatchesContext);

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import GAMES from "@/data/games/";
-import Header from "@/components/Header";
-import Paper from "@/components/Paper";
-import Wrapper from "@/components/Wrapper";
+import Header from "@/components/header";
+import Paper from "@/components/paper";
+import Wrapper from "@/components/wrapper";
 
 export default function GameSelect() {
   return (

@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "@/pages/homepage";
 import ViewMatch from "@/pages/view-match";
 import NewMatch from "@/pages/new-match";
-import GameSelect from "@/pages/new-match/GameSelect";
+import GameSelect from "@/pages/new-match/game-select";
 
 function Router() {
   return (

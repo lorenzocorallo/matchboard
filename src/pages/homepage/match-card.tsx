@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Match from "@/types/Match";
-import Paper from "@/components/Paper";
+import Match from "@/types/match";
+import Paper from "@/components/paper";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   match: Match;

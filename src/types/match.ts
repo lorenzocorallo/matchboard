@@ -1,5 +1,5 @@
-import { Game } from "./Game";
-import Player from "./Player";
+import { Game } from "./game";
+import Player from "./player";
 
 export default interface Match {
   id: string;

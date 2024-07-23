@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
-import Button from "./Button";
-import Overlay from "./Overlay";
-import TextField from "./TextField";
+import Button from "./button";
+import Overlay from "./overlay";
+import TextField from "./text-field";
 
 interface Props extends React.HTMLAttributes<HTMLFormElement> {
   active: boolean;
