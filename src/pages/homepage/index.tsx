@@ -28,9 +28,9 @@ function Homepage() {
     <Wrapper>
       <Header title="Lista partite" />
       <Matches />
-      <div className="flex w-full border-t-[1px] border-slate-800 dark:border-slate-200 justify-center items-center py-2 px-4">
+      <div className="flex w-full border-t-[1px] border-slate-800 dark:border-slate-200 justify-center items-center px-2 py-3">
         <Link to="/new" className="w-full">
-          <Button theme="success" className="text-lg w-full mx-0 flex-1">
+          <Button theme="success" className="text-lg w-full mx-0 flex-1 py-3">
             Nuova Partita
           </Button>
         </Link>

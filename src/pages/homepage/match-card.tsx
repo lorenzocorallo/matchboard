@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Match from "@/types/match";
 import Paper from "@/components/paper";
+import MatchStateBubbles from "@/components/match-state-bubbles";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   match: Match;
@@ -10,22 +11,16 @@ function MatchCard({ match: m }: Props) {
   return (
     <Link to={`/match/${m.id}`}>
       <Paper className="w-full cursor-pointer text-left">
-        <div className="flex justify-between items-center w-full">
-          <p>{m.name}</p>
+        <div className="flex items-center w-full">
+          <MatchStateBubbles finished={m.finished} />
+          <p className="ml-2">{m.name}</p>
+          <div className="flex-grow" />
           <p className="px-2 py-1 bg-green-100 dark:bg-green-800 rounded-md dark:text-white">
             {m.game.name}
           </p>
         </div>
-        <div className="flex justify-between w-full">
-          <p
-            className={
-              m.finished
-                ? "text-green-400"
-                : "text-orange-400 dark:text-yellow-400"
-            }
-          >
-            {m.finished ? "Finita " : "In Corso "}
-          </p>
+
+        <div className="flex justify-end w-full text-slate-500 dark:text-slate-300">
           <p>
             {m.date.toLocaleTimeString([], {
               year: "numeric",

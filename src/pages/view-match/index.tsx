@@ -10,6 +10,7 @@ import Header from "@/components/header";
 import Wrapper from "@/components/wrapper";
 import LoadingSpinner from "@/components/loading-spinner";
 import MatchPlayer from "./match-player";
+import MatchStateBubbles from "@/components/match-state-bubbles";
 
 function Match() {
   const { matches, updateMatch, deleteMatch, addMatch } =
@@ -121,23 +122,13 @@ function Match() {
       {match ? (
         <div className="px-5 w-full flex flex-col flex-1 py-4 gap-2">
           <div>
-            <p className="flex">
+            <p className="flex gap-2">
+              <MatchStateBubbles finished={match.finished} />
               <span className="flex-1 text-left">
                 {match ? `${match.name.trimEnd()} ` : "Partita in caricamento "}
                 ({match.game.name}){" "}
               </span>
               {match.date.toLocaleDateString()}
-            </p>
-            <p className="flex justify-between">
-              <span
-                className={
-                  match.finished
-                    ? "text-green-400"
-                    : "dark:text-yellow-400 text-orange-500"
-                }
-              >
-                {match.finished ? "Finita" : "In Corso"}
-              </span>
             </p>
             <div className="flex justify-between items-center">
               <p className="flex-1 text-left text-gray-600 dark:text-gray-400">
