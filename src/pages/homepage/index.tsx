@@ -29,7 +29,7 @@ function Matches() {
   const matches = m.filter(match => selectedStatusFilter === "all" || match.finished === (selectedStatusFilter === "finished"));
 
   return (
-    <div className="p-4 gap-4 w-full flex flex-col flex-1 overflow-y-hidden">
+    <div className="p-4 gap-4 w-full flex flex-col flex-1 overflow-y-hidden items-center">
       {matches.length > 0 && (
         <div className="flex gap-2">
           {MATCH_STATUS.map((status) => {
