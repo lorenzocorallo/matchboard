@@ -1,36 +1,32 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { IoPencil } from "react-icons/io5";
-import { Game } from "@/types/game";
 import Paper from "@/components/paper";
 import Prompt from "@/components/prompt";
 import Switch from "@/components/switch";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  game: Game;
+  points: number[];
+  isWithDelta: boolean;
+  hasDeltaPoints: boolean;
+  onWithDeltaToggle: () => void;
+  selectedPoints: number;
   onValue: (n: number) => void;
   label?: string;
 }
-export default function PointsSelect({ game, label, onValue }: Props) {
-  const { defaultPoints, deltaPoints } = game;
+export default function PointsSelect({
+  points,
+  selectedPoints,
+  onValue,
+  hasDeltaPoints,
+  isWithDelta,
+  onWithDeltaToggle,
+  label,
+}: Props) {
   const [isCustom, setIsCustom] = useState<boolean>(false);
-  const [isWithDelta, setIsWithDelta] = useState<boolean>(false);
-
-  const points = useMemo(
-    () =>
-      defaultPoints.map((p) =>
-        isWithDelta && deltaPoints ? p + deltaPoints : p,
-      ),
-    [defaultPoints, isWithDelta, deltaPoints],
-  );
-
-  const defaultSelectedPoints = points[parseInt((points.length / 2).toFixed(0)) - 1];
-
-  const [selectedPoints, setSelectedPoints] = useState<number>(defaultSelectedPoints);
 
   const handleOnValue = useCallback(
     (n: number, custom: boolean = false) => {
       setIsCustom(custom);
-      setSelectedPoints(n);
       onValue(n);
     },
     [onValue],
@@ -40,15 +36,14 @@ export default function PointsSelect({ game, label, onValue }: Props) {
     <Paper>
       <div className="w-full flex justify-between items-center">
         <p className="text-lg w-full text-left">
-          {label ||
-            (game.mode === "win" ? "Punti per vincere" : "Punti per perdere")}
+          {label}
         </p>
-        {deltaPoints && (
+        {hasDeltaPoints && (
           <div className="flex items-center gap-2">
             +5
             <Switch
               active={isWithDelta}
-              onClick={() => setIsWithDelta((v) => !v)}
+              onClick={onWithDeltaToggle}
             />
           </div>
         )}

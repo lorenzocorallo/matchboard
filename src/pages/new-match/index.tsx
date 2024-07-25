@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { IoArrowForward, IoTrash } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -13,25 +13,32 @@ import Wrapper from "@/components/wrapper";
 import Prompt from "@/components/prompt";
 import Paper from "@/components/paper";
 import GAMES from "@/data/games";
-import { Game } from "@/types/game";
 import PointsSelect from "./points-select";
 
 export default function NewMatch() {
   const [name, setName] = useState<string>("Match");
-  const [points, setPoints] = useState<number>(0);
   const [addPlayerActive, setAddPlayerActive] = useState<boolean>(false);
   const [players, setPlayers] = useState<PlayerType[]>([]);
   const { addMatch } = useContext(MatchesContext);
   const navigate = useNavigate();
 
   const { gameId } = useParams<{ gameId: string }>()!;
-  const [game, setGame] = useState<Game>();
+  const game = GAMES.find((g) => g.id === gameId);
+  if (!game) return navigate("/new");
 
-  useEffect(() => {
-    const game = GAMES.find((g) => g.id === gameId);
-    if (!game) return navigate("/new");
-    setGame(game);
-  }, [gameId, navigate]);
+  const [isWithDelta, setIsWithDelta] = useState<boolean>(false);
+  const defaultPoints = game.defaultPoints.map((p) =>
+    isWithDelta && game.deltaPoints ? p + game.deltaPoints : p,
+  );
+
+  const defaultSelectedPoints =
+    defaultPoints[parseInt((defaultPoints.length / 2).toFixed(0)) - 1];
+  const [isSelectedPoints, setIsSelectedPoints] = useState<boolean>(false);
+  const [selectedPoints, setSelectedPoints] = useState<number>(
+    defaultSelectedPoints,
+  );
+
+  const chosenPoints = isSelectedPoints ? selectedPoints: defaultSelectedPoints;
 
   function handleCreate(): void {
     if (players.length < 2 || !game) return;
@@ -41,7 +48,7 @@ export default function NewMatch() {
       finished: false,
       name,
       players,
-      chosenPoints: points,
+      chosenPoints,
       game,
     };
     addMatch(newMatch);
@@ -60,7 +67,13 @@ export default function NewMatch() {
 
   function handleSetPoints(n: number): void {
     if (n <= 0) return;
-    setPoints(n);
+    setIsSelectedPoints(true);
+    setSelectedPoints(n);
+  }
+
+  function handleWithDeltaToggle(): void {
+    setIsWithDelta(v => !v);
+    setIsSelectedPoints(false);
   }
 
   function handleDefaultPlayers(): void {
@@ -91,7 +104,17 @@ export default function NewMatch() {
           onFocus={() => name === "Match" && setName("")}
           onBlur={() => name === "" && setName("Match")}
         />
-        <PointsSelect game={game} onValue={handleSetPoints} />
+        <PointsSelect
+          points={defaultPoints}
+          hasDeltaPoints={!!game.deltaPoints}
+          isWithDelta={isWithDelta}
+          onWithDeltaToggle={handleWithDeltaToggle}
+          selectedPoints={chosenPoints}
+          onValue={handleSetPoints}
+          label={
+            game.mode === "win" ? "Punti per vincere" : "Punti per perdere"
+          }
+        />
         <div className="flex-1 w-full">
           <Paper>
             <div className="flex items-center w-full justify-between">
