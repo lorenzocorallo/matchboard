@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { IoArrowForward, IoTrash } from "react-icons/io5";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { MatchesContext } from "@/context/matches";
 import Match from "@/types/match";
@@ -24,7 +24,7 @@ export default function NewMatch() {
 
   const { gameId } = useParams<{ gameId: string }>()!;
   const game = GAMES.find((g) => g.id === gameId);
-  if (!game) return navigate("/new");
+  if (!game) return <Navigate to="/new" />;
 
   const [isWithDelta, setIsWithDelta] = useState<boolean>(false);
   const defaultPoints = game.defaultPoints.map((p) =>
